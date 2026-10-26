@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>French Interactive Lab (A2)</title>
+    <title>French Interactive Lab — Laboratorio de Aprendizaje</title>
     <style>
         :root {
             --primary-color: #2563eb;
@@ -25,7 +25,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
         }
 
@@ -37,26 +37,68 @@
         h1 {
             font-size: 2.5rem;
             color: #0f172a;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         p.subtitle {
-            font-size: 1.1rem;
-            color: #64748b;
+            font-size: 1.2rem;
+            color: #475569;
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            line-height: 1.6;
         }
 
-        .grid {
+        /* Sección de resumen / qué encontrarás */
+        .intro-box {
+            background-color: var(--card-bg);
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .intro-box h2 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
-            margin-top: 30px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            background-color: #f1f5f9;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #334155;
+            line-height: 1.4;
+        }
+
+        .feature-item strong {
+            color: #0f172a;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Tarjetas de navegación principal */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
         }
 
         .card {
             background-color: var(--card-bg);
             border: 1px solid #e2e8f0;
             border-radius: var(--border-radius);
-            padding: 24px;
+            padding: 30px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             display: flex;
@@ -69,16 +111,18 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
-        .card h2 {
+        .card h3 {
             margin-top: 0;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             color: var(--primary-color);
+            margin-bottom: 12px;
         }
 
         .card p {
             color: #475569;
-            font-size: 0.95rem;
-            line-height: 1.5;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
         }
 
         .btn {
@@ -86,11 +130,10 @@
             background-color: var(--primary-color);
             color: white;
             text-decoration: none;
-            padding: 10px 18px;
+            padding: 12px 20px;
             border-radius: 8px;
             font-weight: 600;
             text-align: center;
-            margin-top: 15px;
             transition: background-color 0.2s ease;
         }
 
@@ -110,32 +153,52 @@
 
     <div class="container">
         <header>
-            <h1>French Interactive Lab 🇫🇷</h1>
-            <p class="subtitle">Laboratorio interactivo y guías de estudio para el aprendizaje del idioma francés (A2)</p>
+            <h1>🇫🇷 French Interactive Lab</h1>
+            <p class="subtitle">Bienvenida a tu espacio digital de estudio interactivo diseñado para dominar el idioma francés (Nivel A2) de forma dinámica y estructurada.</p>
         </header>
 
-        <div class="grid">
-            <!-- Sección Gramática -->
+        <!-- Resumen de lo que se van a encontrar -->
+        <div class="intro-box">
+            <h2>¿Qué encontrarás en este laboratorio?</h2>
+            <p>Este espacio recopila recursos prácticos y variados para potenciar tu aprendizaje diario. Aquí tienes un vistazo de lo que hemos preparado:</p>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <strong>🎧 Audiolibros Interactivos</strong>
+                    Recursos en audio para entrenar tu oído y familiarizarte con la entonación nativa.
+                </div>
+                <div class="feature-item">
+                    <strong>📄 Guías en PDF y Prácticas</strong>
+                    Documentos de estudio detallados, estructuras gramaticales y ejercicios paso a paso.
+                </div>
+                <div class="feature-item">
+                    <strong>🎥 Videos y Prácticas Web</strong>
+                    Herramientas visuales y dinámicas interactivas para afianzar conceptos clave.
+                </div>
+            </div>
+        </div>
+
+        <!-- Opciones principales: Gramática y Fonética -->
+        <div class="nav-grid">
             <div class="card">
                 <div>
-                    <h2>📚 Grammaire</h2>
-                    <p>Accede a guías interactivas, explicaciones de tiempos verbales, conjugaciones y ejercicios de gramática para el nivel A2.</p>
+                    <h3>📚 Section Grammaire</h3>
+                    <p>Explora guías detalladas sobre tiempos verbales, conjugaciones esenciales, reglas de formación de frases y artículos partitivos.</p>
                 </div>
-                <a href="./grammaire/" class="btn">Explorar Gramática</a>
+                <a href="./grammaire/" class="btn">Explorar Grammaire</a>
             </div>
 
-            <!-- Sección Fonética -->
             <div class="card">
                 <div>
-                    <h2>🎙️ Phonétique</h2>
-                    <p>Explora recursos multimedia, guías de pronunciación y ejercicios prácticos de fonética francesa.</p>
+                    <h3>🗣️ Section Phonétique</h3>
+                    <p>Accede a videos interactivos, ejercicios de fonética y recursos multimedia para perfeccionar tu pronunciación en francés.</p>
                 </div>
-                <a href="./phonetique/" class="btn">Explorar Fonética</a>
+                <a href="./phonetique/" class="btn">Explorar Phonétique</a>
             </div>
         </div>
 
         <footer>
-            <p>Creado por Amayling Rodríguez — Process Transformation Specialist & PMO</p>
+            <p>French Interactive Lab — Creado con dedicación para el aprendizaje continuo</p>
         </footer>
     </div>
 
