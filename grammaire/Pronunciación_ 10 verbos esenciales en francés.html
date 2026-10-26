@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pronunciación: 10 verbos esenciales en francés</title>
+<style>
+:root{--bg:#f3f6fa;--ink:#14213d;--mute:#5b6679;--card:#fff;--line:#d5dce6;--acc:#1d4ed8;--accbg:#e3ebff;--hot:#c2410c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1522;--ink:#e8edf6;--mute:#9aa6bb;--card:#16203a;--line:#2a3756;--acc:#7aa2ff;--accbg:#22315c;--hot:#fb923c}}
+:root[data-theme="dark"]{--bg:#0e1522;--ink:#e8edf6;--mute:#9aa6bb;--card:#16203a;--line:#2a3756;--acc:#7aa2ff;--accbg:#22315c;--hot:#fb923c}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Iowan Old Style",serif}
+main{max-width:860px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:1.7rem;margin:0 0 4px;letter-spacing:-.01em}
+p.sub{margin:0 0 16px;color:var(--mute);font-family:system-ui,sans-serif;font-size:.92rem}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;font-family:system-ui,sans-serif}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:7px 12px}
+button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+button[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#fff}
+.sp{flex:1}#tabs button{margin-bottom:6px}
+#msg{color:var(--hot);font-size:.85rem;font-family:system-ui,sans-serif;margin:0 0 10px;min-height:1.2em}
+.v{background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:12px;overflow:hidden}
+.vh{display:flex;align-items:baseline;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.vh h2{margin:0;font-size:1.25rem}
+.vh span{color:var(--mute);font-family:system-ui,sans-serif;font-size:.85rem}
+.vh button{margin-left:auto;font-size:.8rem;padding:5px 10px}
+.rows{display:grid;grid-template-columns:1fr}
+.r{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;padding:9px 14px}
+.r:last-child{border-bottom:0}
+.r:hover{background:var(--accbg)}
+.r.on{background:var(--accbg);color:var(--acc)}
+.r b{font-weight:600;flex:1}
+.r i{font-style:normal;font-family:"Segoe UI","Noto Sans",system-ui,sans-serif;color:var(--mute);font-size:.9rem}
+.r::before{content:"▶";font-size:.65rem;color:var(--acc)}
+@media(min-width:640px){.rows{grid-template-columns:1fr 1fr}.r:nth-child(odd){border-right:1px solid var(--line)}.r:nth-last-child(-n+2){border-bottom:0}}
+</style>
+</head>
+<body>
+<main>
+<h1>Pronunciación de los 10 verbos esenciales</h1>
+<p class="sub">Toca una forma para escucharla. Con el presente y el imperativo verás también la transcripción fonética (IPA).</p>
+<div class="bar" role="group" aria-label="Opciones">
+<span id="tabs" role="group" aria-label="Tiempo verbal"></span>
+<span class="sp"></span>
+<button id="slow" aria-pressed="false">Velocidad lenta</button>
+</div>
+<p id="msg" role="status"></p>
+<div id="list"></div>
+</main>
+<script>
+var P=["je","tu","il","nous","vous","ils"],PD=["je / j'","tu","il / elle / on","nous","vous","ils / elles"];
+var T=["Présent","Passé composé","Imparfait","Futur simple","Impératif","Passé récent","Plus-que-parfait","Conditionnel"];
+var V=[
+["être","ser / estar",["suis","es","est","sommes","êtes","sont"],["ai été","as été","a été","avons été","avez été","ont été"],["étais","étais","était","étions","étiez","étaient"],["serai","seras","sera","serons","serez","seront"],["sɥi","ɛ","ɛ","sɔm","ɛt","sɔ̃"]],
+["avoir","tener / haber",["ai","as","a","avons","avez","ont"],["ai eu","as eu","a eu","avons eu","avez eu","ont eu"],["avais","avais","avait","avions","aviez","avaient"],["aurai","auras","aura","aurons","aurez","auront"],["e","a","a","avɔ̃","ave","ɔ̃"]],
+["faire","hacer",["fais","fais","fait","faisons","faites","font"],["ai fait","as fait","a fait","avons fait","avez fait","ont fait"],["faisais","faisais","faisait","faisions","faisiez","faisaient"],["ferai","feras","fera","ferons","ferez","feront"],["fɛ","fɛ","fɛ","fəzɔ̃","fɛt","fɔ̃"]],
+["dire","decir",["dis","dis","dit","disons","dites","disent"],["ai dit","as dit","a dit","avons dit","avez dit","ont dit"],["disais","disais","disait","disions","disiez","disaient"],["dirai","diras","dira","dirons","direz","diront"],["di","di","di","dizɔ̃","dit","diz"]],
+["aller","ir",["vais","vas","va","allons","allez","vont"],["suis allé(e)","es allé(e)","est allé(e)","sommes allé(e)s","êtes allé(e)s","sont allé(e)s"],["allais","allais","allait","allions","alliez","allaient"],["irai","iras","ira","irons","irez","iront"],["vɛ","va","va","alɔ̃","ale","vɔ̃"]],
+["voir","ver",["vois","vois","voit","voyons","voyez","voient"],["ai vu","as vu","a vu","avons vu","avez vu","ont vu"],["voyais","voyais","voyait","voyions","voyiez","voyaient"],["verrai","verras","verra","verrons","verrez","verront"],["vwa","vwa","vwa","vwajɔ̃","vwaje","vwa"]],
+["savoir","saber",["sais","sais","sait","savons","savez","savent"],["ai su","as su","a su","avons su","avez su","ont su"],["savais","savais","savait","savions","saviez","savaient"],["saurai","sauras","saura","saurons","saurez","sauront"],["sɛ","sɛ","sɛ","savɔ̃","save","sav"]],
+["pouvoir","poder",["peux","peux","peut","pouvons","pouvez","peuvent"],["ai pu","as pu","a pu","avons pu","avez pu","ont pu"],["pouvais","pouvais","pouvait","pouvions","pouviez","pouvaient"],["pourrai","pourras","pourra","pourrons","pourrez","pourront"],["pø","pø","pø","puvɔ̃","puve","pœv"]],
+["vouloir","querer",["veux","veux","veut","voulons","voulez","veulent"],["ai voulu","as voulu","a voulu","avons voulu","avez voulu","ont voulu"],["voulais","voulais","voulait","voulions","vouliez","voulaient"],["voudrai","voudras","voudra","voudrons","voudrez","voudront"],["vø","vø","vø","vulɔ̃","vule","vœl"]],
+["venir","venir",["viens","viens","vient","venons","venez","viennent"],["suis venu(e)","es venu(e)","est venu(e)","sommes venu(e)s","êtes venu(e)s","sont venu(e)s"],["venais","venais","venait","venions","veniez","venaient"],["viendrai","viendras","viendra","viendrons","viendrez","viendront"],["vjɛ̃","vjɛ̃","vjɛ̃","vənɔ̃","vəne","vjɛn"]]
+];
+
+var IMP=[[["sois","soyons","soyez"],["swa","swajɔ̃","swaje"]],[["aie","ayons","ayez"],["ɛ","ɛjɔ̃","ɛje"]],[["fais","faisons","faites"],["fɛ","fəzɔ̃","fɛt"]],[["dis","disons","dites"],["di","dizɔ̃","dit"]],[["va","allons","allez"],["va","alɔ̃","ale"]],[["vois","voyons","voyez"],["vwa","vwajɔ̃","vwaje"]],[["sache","sachons","sachez"],["saʃ","saʃɔ̃","saʃe"]],null,[["veuille","veuillons","veuillez"],["vøj","vøjɔ̃","vøje"]],[["viens","venons","venez"],["vjɛ̃","vənɔ̃","vəne"]]];
+var IP=["tu","nous","vous"];
+var PR=["viens","viens","vient","venons","venez","viennent"],AVI=["avais","avais","avait","avions","aviez","avaient"],ETI=["étais","étais","était","étions","étiez","étaient"],
+PART=["été","eu","fait","dit","allé(e)","vu","su","pu","voulu","venu(e)"],INF=["être","avoir","faire","dire","aller","voir","savoir","pouvoir","vouloir","venir"],
+STEM=["ser","aur","fer","dir","ir","verr","saur","pourr","voudr","viendr"],CE=["ais","ais","ait","ions","iez","aient"];
+V.forEach(function(v,i){var vow=/^[aeéêhiou]/.test(INF[i]),mv=(i==4||i==9);
+ v[7]=PR.map(function(x){return x+(vow?" d'":" de ")+INF[i]});
+ v[8]=(mv?ETI:AVI).map(function(x,j){return x+" "+PART[i]+(mv&&j>=3?"s":"")});
+ v[9]=CE.map(function(e){return STEM[i]+e});});
+var t=0,slow=false,voice=null,queue=0,tabs=document.getElementById("tabs"),list=document.getElementById("list"),msg=document.getElementById("msg");
+function say(i,j,k){if(t==4)return "… "+IMP[i][0][j]+" !";var f=V[i][2+t][j].replace(/\(e\)/g,"").replace(/\(s\)/g,"s");var p=P[j];
+ if(p=="je"){p=/^[aeéêhiou]/.test(f)?"j'":"je ";}else p+=" ";
+ return "… "+p+f+".";}
+function speak(txt,el){
+ if(!("speechSynthesis" in window)){msg.textContent="Tu navegador no admite síntesis de voz. Prueba con Chrome, Edge o Safari.";return Promise.resolve();}
+ return new Promise(function(res){
+  var u=new SpeechSynthesisUtterance(txt);
+  u.lang="fr-FR";if(voice)u.voice=voice;
+  u.rate=slow?.68:.92;
+  u.pitch=1;
+  u.onstart=function(){if(el)el.classList.add("on")};
+  u.onend=u.onerror=function(){if(el)el.classList.remove("on");res()};
+  speechSynthesis.speak(u);
+ });
+}
+function pickVoice(){var vs=speechSynthesis.getVoices();voice=vs.filter(function(v){return /^fr[-_]FR/i.test(v.lang)})[0]||vs.filter(function(v){return /^fr/i.test(v.lang)})[0]||null;
+ msg.textContent=voice?"":"No encuentro una voz francesa instalada; se usará la voz por defecto del dispositivo.";}
+if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
+function render(){
+ tabs.innerHTML="";T.forEach(function(n,x){var b=document.createElement("button");b.textContent=n;b.setAttribute("aria-pressed",x==t);b.style.marginRight="6px";b.onclick=function(){speechSynthesis&&speechSynthesis.cancel();t=x;render()};tabs.appendChild(b)});
+ list.innerHTML="";
+ V.forEach(function(v,i){
+  var d=document.createElement("section");d.className="v";
+  var h=document.createElement("div");h.className="vh";h.innerHTML="<h2>"+v[0]+"</h2><span>"+v[1]+"</span>";
+  var all=document.createElement("button");all.textContent="Escuchar todo";h.appendChild(all);d.appendChild(h);
+  var rows=document.createElement("div");rows.className="rows";var els=[];
+  var N=6;
+  if(t==4){N=IMP[i]?3:0;if(!IMP[i]){all.style.display="none";var nb=document.createElement("p");nb.style.cssText="margin:0;padding:10px 14px;color:var(--mute);font:.9rem system-ui,sans-serif";nb.textContent="Pouvoir no se usa en imperativo.";d.appendChild(nb);}}
+  for(var j=0;j<N;j++){(function(j){
+   var b=document.createElement("button");b.className="r";
+   var form,ipa;
+   if(t==4){form=IMP[i][0][j]+" ("+IP[j]+")";ipa="<i>["+IMP[i][1][j]+"]</i>";}
+   else{form=(j==0&&/^[aeéêhiou]/.test(v[2+t][j])?"j'":PD[j].split(" / ")[0]+" ")+v[2+t][j];ipa=t==0?"<i>["+v[6][j]+"]</i>":"";}
+   b.innerHTML="<b></b>"+ipa;
+   b.firstChild.textContent=form;
+   b.onclick=function(){speechSynthesis.cancel();speak(say(i,j),b)};
+   rows.appendChild(b);els.push(b);})(j);}
+  all.onclick=function(){speechSynthesis.cancel();var id=++queue;(async function(){for(var j=0;j<els.length;j++){if(id!=queue)return;await speak(say(i,j),els[j]);}})();};
+  d.appendChild(rows);list.appendChild(d);});
+}
+document.getElementById("slow").onclick=function(){slow=!slow;this.setAttribute("aria-pressed",slow)};
+render();
+</script>
+</body>
+</html>

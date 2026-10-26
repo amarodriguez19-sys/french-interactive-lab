@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Audiolibro: los tiempos verbales en francés</title>
+<style>
+:root{--bg:#f3f6f8;--fg:#14212b;--mut:#5a6b78;--card:#fff;--line:#d3dde4;--ac:#1f4e79;--fr:#b3261e;--hl:#fff1b8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10181f;--fg:#e6edf2;--mut:#93a4b1;--card:#18232c;--line:#2a3945;--ac:#7fb6e6;--fr:#ff8f86;--hl:#4a3f12}}
+:root[data-theme="dark"]{--bg:#10181f;--fg:#e6edf2;--mut:#93a4b1;--card:#18232c;--line:#2a3945;--ac:#7fb6e6;--fr:#ff8f86;--hl:#4a3f12}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 Georgia,"Times New Roman",serif}
+header{padding:20px 16px 8px;max-width:760px;margin:0 auto}
+h1{font-size:1.5rem;line-height:1.25;margin:0 0 4px}
+header p{margin:0;color:var(--mut);font-size:.95rem}
+main{max-width:760px;margin:0 auto;padding:0 16px 150px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:12px 0}
+nav button{flex:none;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;padding:6px 10px;font:inherit;font-size:.82rem;cursor:pointer}
+nav button[aria-current="true"]{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+h2{font-size:1.25rem;margin:8px 0 12px}
+.l{padding:6px 10px;border-left:3px solid transparent;border-radius:4px;cursor:pointer;margin:2px 0}
+.l.on{background:var(--hl);border-left-color:var(--ac)}
+.f{color:var(--fr);font-style:italic}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
+.in{max-width:760px;margin:0 auto}
+.prog{height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin-bottom:8px}
+.prog i{display:block;height:100%;width:0;background:var(--ac)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row button{border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:8px;padding:8px 12px;font:inherit;font-size:.9rem;cursor:pointer}
+.row .go{background:var(--ac);color:var(--bg);border-color:var(--ac);min-width:96px;font-weight:bold}
+.row label{font-size:.8rem;color:var(--mut);display:flex;gap:6px;align-items:center}
+.row select{max-width:150px;font:inherit;font-size:.8rem;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:3px}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+#warn{display:none;margin:8px 0;padding:8px 12px;border:1px solid var(--fr);border-radius:8px;font-size:.9rem}
+</style>
+</head>
+<body>
+<header>
+<h1>Los tiempos verbales en francés</h1>
+<p>Audiolibro de la guía de estudio, niveles A1 a B1. Español para explicar, francés para los ejemplos.</p>
+<div id="warn">Tu navegador no ofrece voz de síntesis. Abre esta página en Chrome, Edge o Safari.</div>
+</header>
+<main>
+<nav id="nav" aria-label="Capítulos"></nav>
+<h2 id="ct"></h2>
+<div id="txt"></div>
+</main>
+<div class="bar"><div class="in">
+<div class="prog"><i id="pg"></i></div>
+<div class="row">
+<button id="prev" aria-label="Capítulo anterior">Anterior</button>
+<button id="pp" class="go">Escuchar</button>
+<button id="next" aria-label="Capítulo siguiente">Siguiente</button>
+<label>Velocidad <input id="rate" type="range" min="0.6" max="1.3" step="0.05" value="0.9"></label>
+<label>Español <select id="ves"></select></label>
+<label>Francés <select id="vfr"></select></label>
+</div></div></div>
+<script>
+const C=[
+["Cómo usar la guía",`Guía de estudio: cómo formar frases con los tiempos verbales en francés. Niveles A1 a B1.
+Está basada en diez verbos esenciales: [[être, avoir, faire, dire, aller, voir, savoir, pouvoir, vouloir, venir]].
+Cada sección explica una fórmula, cuándo usarla, cómo se niega, cómo se pregunta y qué errores evitar.
+Los tiempos son: [[présent, passé composé, imparfait, futur simple, impératif, futur proche, passé récent, plus-que-parfait]] y [[conditionnel présent]].
+Orden recomendado de estudio: uno, [[présent]]. Dos, [[futur proche]]. Tres, [[impératif]]. Cuatro, [[passé composé]]. Cinco, [[imparfait]]. Seis, [[futur simple]]. Siete, [[passé récent]]. Ocho, [[plus-que-parfait]]. Nueve, [[conditionnel présent]].`],
+["La frase básica",`La estructura de base es sujeto, verbo y complemento. A diferencia del español, el sujeto casi nunca se omite.
+~Je suis fatigué.
+Estoy cansado.
+~Nous faisons du sport.
+Hacemos deporte.
+Negación: se rodea el verbo conjugado con [[ne]] y [[pas]]. Si el verbo empieza por vocal, [[ne]] pasa a [[n']].
+~Je ne suis pas fatigué.
+~Il n'a pas de voiture.
+Pregunta: hay tres formas, de más informal a más formal. Con entonación:
+~Tu viens ?
+Con [[est-ce que]]:
+~Est-ce que tu viens ?
+Y con inversión:
+~Viens-tu ?`],
+["Présent",`Fórmula: sujeto más verbo conjugado en presente. Se usa para acciones actuales, verdades generales, hábitos y estados.
+Con verbos modales, como [[pouvoir, vouloir]] y [[savoir]], el segundo verbo va en infinitivo.
+~Je peux parler français.
+Puedo hablar francés.
+~Elle sait danser.
+Ella sabe bailar.
+Errores frecuentes. Decir [[je ai]] en lugar de [[j'ai]]: la elisión es obligatoria.
+Escribir [[vous faisez]] en lugar de [[vous faites]], y [[vous disez]] en lugar de [[vous dites]].
+Ejemplos de afirmativa, negativa y pregunta:
+~Je veux un café.
+Quiero un café.
+~Je ne veux pas de café.
+No quiero café.
+~Est-ce que tu peux venir ?
+¿Puedes venir?`],
+["Futur proche",`Fórmula: sujeto, más [[aller]] en presente, más infinitivo. Se usa para lo que va a pasar pronto o ya está planeado. Equivale al español "voy a" más infinitivo.
+Conjugación de [[aller]]:
+~Je vais. Tu vas. Il va. Nous allons. Vous allez. Ils vont.
+Negación: [[ne]] y [[pas]] rodean solo a [[aller]], y el infinitivo queda intacto.
+~Je ne vais pas venir.
+No voy a venir.
+Pronombres: el pronombre complemento va delante del infinitivo.
+~Je vais le faire.
+Voy a hacerlo.
+Error frecuente: conjugar los dos verbos. Se dice [[je vais faire]], nunca [[je vais fais]].
+Ejemplos:
+~Je vais faire mes devoirs.
+~Il va venir demain.
+~Nous allons dire la vérité.
+~Elles vont vouloir rester.`],
+["Impératif",`Fórmula: el verbo conjugado sin pronombre sujeto. Solo existen tres personas: [[tu, nous, vous]].
+Se usa para órdenes, consejos, invitaciones, donde [[nous]] significa "hagamos", y peticiones corteses con [[vous]]. [[Pouvoir]] no se usa en imperativo.
+Formas:
+~être: sois, soyons, soyez.
+~avoir: aie, ayons, ayez.
+~faire: fais, faisons, faites.
+~dire: dis, disons, dites.
+~aller: va, allons, allez.
+~voir: vois, voyons, voyez.
+~savoir: sache, sachons, sachez.
+~vouloir: veuille, veuillons, veuillez.
+~venir: viens, venons, venez.
+Negación: [[ne]] y [[pas]] rodean el verbo, igual que en el presente.
+~Ne sois pas en retard !
+¡No llegues tarde!
+Pronombres: en la afirmativa van detrás del verbo, con guion. En la negativa van delante.
+~Dis-le ! Ne le dis pas !
+Cuidado: en la forma [[tu]] de los verbos en [[-er]] se omite la [[s]]: [[va]], no [[vas]], salvo delante de [[y]] o [[en]]:
+~Vas-y !`],
+["Passé composé",`Fórmula: sujeto, más auxiliar [[avoir]] o [[être]] en presente, más participio pasado. Se usa para acciones terminadas y puntuales en el pasado.
+Participios de los diez verbos y su auxiliar:
+~être, été, avec avoir. avoir, eu, avec avoir. faire, fait. dire, dit. aller, allé, avec être. voir, vu. savoir, su. pouvoir, pu. vouloir, voulu. venir, venu, avec être.
+Con [[avoir]], el participio no cambia.
+~J'ai fait un gâteau.
+Hice un pastel.
+~Nous avons vu un film.
+Vimos una película.
+Con [[être]], que va con [[aller]] y [[venir]], el participio concuerda en género y número con el sujeto.
+~Il est allé au marché. Elle est allée au marché.
+~Ils sont venus. Elles sont venues.
+Negación: [[ne]] y [[pas]] rodean solo al auxiliar.
+~Je n'ai pas vu Marie.
+~Elle n'est pas venue.
+Pregunta:
+~Est-ce que tu as dit la vérité ? As-tu dit la vérité ?
+Pronombres: van delante del auxiliar.
+~Je l'ai vu.
+Lo vi.
+Errores frecuentes: usar [[avoir]] con [[aller]] o [[venir]]. Se dice [[je suis allé]], no [[j'ai allé]]. Olvidar la concordancia: [[elle est allée]]. Y confundir [[été]], participio de [[être]], con [[été]], verano: el contexto lo aclara.`],
+["Imparfait",`Fórmula: el radical de [[nous]] en presente, sin [[-ons]], más las terminaciones [[-ais, -ais, -ait, -ions, -iez, -aient]].
+Ejemplos del radical:
+~nous faisons, fais, je faisais.
+~nous voyons, voy, je voyais.
+~nous venons, ven, je venais.
+~nous voulons, voul, je voulais.
+Única excepción: [[être]], con radical [[ét]].
+~J'étais, tu étais, il était, nous étions, vous étiez, ils étaient.
+Se usa para descripciones en el pasado:
+~Il faisait beau.
+Hacía buen tiempo.
+Hábitos pasados:
+~Quand j'avais dix ans, je venais ici chaque été.
+Estados y circunstancias:
+~Elle était fatiguée.
+Y acciones en curso interrumpidas por otra:
+~Je voyais un film quand il a appelé.
+Negación:
+~Je ne voulais pas partir.
+La duda más común es [[imparfait]] o [[passé composé]]. El [[imparfait]] marca fondo, escena y hábito. El [[passé composé]] marca un hecho puntual, terminado.
+~Il pleuvait. Il a plu hier.
+Llovía. Llovió ayer.
+Combinados:
+~Je dormais quand le téléphone a sonné.
+Dormía cuando sonó el teléfono.`],
+["Futur simple",`Fórmula: radical de futuro, normalmente el infinitivo completo, más las terminaciones [[-ai, -as, -a, -ons, -ez, -ont]]. Estas terminaciones son el presente de [[avoir]], y por eso son fáciles de recordar.
+Radicales de los diez verbos:
+~être, ser: je serai. avoir, aur: j'aurai. faire, fer: je ferai. dire, dir: je dirai. aller, ir: j'irai. voir, verr: je verrai. savoir, saur: je saurai. pouvoir, pourr: je pourrai. vouloir, voudr: je voudrai. venir, viendr: je viendrai.
+Se usa para hechos futuros más lejanos o menos inmediatos, promesas, predicciones y planes formales.
+~Demain, il fera beau.
+Mañana hará buen tiempo.
+~Nous irons en France l'année prochaine.
+Iremos a Francia el año próximo.
+Negación:
+~Je ne viendrai pas.
+[[Futur proche]] o [[futur simple]]. En la conversación diaria, el [[futur proche]] es mucho más frecuente. El [[futur proche]] es inmediato o ya decidido, el [[futur simple]] es más lejano, promesa o predicción.
+~Je vais le faire ce soir. Je le ferai un jour.
+Después de [[si]] no se usa futuro.
+~Si tu viens, je serai content.
+Presente en la condición, futuro en el resultado.`],
+["Passé récent",`Fórmula: sujeto, más [[venir]] en presente, más [[de]], más infinitivo. Se usa para algo que acaba de ocurrir. Equivale al español "acabar de" más infinitivo, y es el espejo del [[futur proche]].
+~Je viens de faire mes devoirs.
+Acabo de hacer mis tareas.
+~Nous venons de voir Marie.
+Acabamos de ver a Marie.
+~Il vient d'arriver.
+Acaba de llegar. Delante de vocal, [[de]] pasa a [[d']].
+Ejemplos por persona:
+~Je viens de dire non. Tu viens de voir ça ? Elle vient de pouvoir partir. Nous venons d'avoir une idée. Vous venez de faire une erreur. Ils viennent de savoir la nouvelle.
+Negación: [[ne]] y [[pas]] rodean solo a [[venir]].
+~Je ne viens pas de partir.
+Pronombres: van delante del infinitivo.
+~Je viens de le voir.
+Error frecuente: olvidar la preposición [[de]]. Se dice [[je viens de manger]], no [[je viens manger]], que significa "vengo a comer".`],
+["Conditionnel présent",`Fórmula: radical del [[futur simple]] más las terminaciones del [[imparfait]]: [[-ais, -ais, -ait, -ions, -iez, -aient]]. Si ya sabes el futuro y el [[imparfait]], ya sabes el condicional: es la mitad de cada uno.
+Radicales con ejemplo:
+~je serais, j'aurais, je ferais, je dirais, j'irais, je verrais, je saurais, je pourrais, je voudrais, je viendrais.
+Se usa para pedir con cortesía:
+~Je voudrais un café, s'il vous plaît.
+Quisiera un café.
+Para pedir un favor:
+~Pourriez-vous m'aider ?
+¿Podría ayudarme?
+Para sugerir o aconsejar:
+~Tu pourrais venir avec nous.
+Podrías venir con nosotros.
+Y para hipótesis:
+~Si j'avais le temps, je viendrais.
+Si tuviera tiempo, vendría.
+Regla de oro con [[si]]: [[si]] más [[imparfait]] en la condición, [[conditionnel]] en el resultado. Nunca se pone el condicional detrás de [[si]].
+~Si j'avais de l'argent, j'irais en France.
+Si tuviera dinero, iría a Francia.
+Negación:
+~Je ne pourrais pas venir.
+Pronunciación: [[je ferai]], futuro, termina en el sonido [[e]], y [[je ferais]], condicional, en el sonido [[ɛ]]. Es la única diferencia oral entre ambos.`],
+["Plus-que-parfait",`Fórmula: sujeto, más auxiliar [[avoir]] o [[être]] en [[imparfait]], más participio pasado. Se usa para una acción pasada que ocurrió antes de otra acción pasada.
+Los participios y la elección del auxiliar son los mismos que en el [[passé composé]].
+~J'avais déjà fait mes devoirs quand il est arrivé.
+Ya había hecho mis tareas cuando llegó.
+~Quand nous sommes arrivés, le film avait commencé.
+Cuando llegamos, la película había empezado.
+~Elle était déjà venue ici.
+Ya había venido aquí. Con [[être]], el participio concuerda con el sujeto.
+Negación: [[ne]] y [[pas]] rodean solo al auxiliar.
+~Je n'avais pas vu le message.
+Palabra clave: [[déjà]], que significa "ya", suele acompañar a este tiempo.
+Error frecuente: usar el [[passé composé]] en vez del [[plus-que-parfait]] cuando hay dos acciones pasadas y hay que marcar cuál fue primero.`],
+["Subjonctif: reconocer",`En A2 y B1 no hace falta conjugar todo el subjuntivo, pero conviene reconocerlo en expresiones fijas. Aparece después de [[il faut que, je veux que, il est possible que]] y [[je voudrais que]].
+~Il faut que je fasse mes devoirs.
+Tengo que hacer mis tareas.
+~Je veux que tu viennes.
+Quiero que vengas.
+~Il faut que nous allions au marché.
+Tenemos que ir al mercado.
+Formas de [[je]] de los diez verbos, para reconocerlas:
+~que je sois, que j'aie, que je fasse, que je dise, que j'aille, que je voie, que je sache, que je puisse, que je veuille, que je vienne.
+Truco: si ves [[il faut que]], el verbo que sigue estará en subjuntivo.`],
+["Cuadro resumen",`Resumen de fórmulas, con el verbo [[faire]] como ejemplo.
+[[Présent]]: sujeto más verbo conjugado.
+~Je fais.
+[[Futur proche]]: [[aller]] en presente más infinitivo.
+~Je vais faire.
+[[Impératif]]: verbo sin sujeto.
+~Fais !
+[[Passé composé]]: auxiliar en presente más participio.
+~J'ai fait.
+[[Imparfait]]: radical de [[nous]] más [[-ais]].
+~Je faisais.
+[[Futur simple]]: radical de futuro más [[-ai]].
+~Je ferai.
+[[Passé récent]]: [[venir]] en presente, más [[de]], más infinitivo.
+~Je viens de faire.
+[[Plus-que-parfait]]: auxiliar en [[imparfait]] más participio.
+~J'avais fait.
+[[Conditionnel présent]]: radical de futuro más terminaciones del [[imparfait]].
+~Je ferais.`],
+["Ejercicios",`Completa con el tiempo indicado. Tras cada frase hay una pausa breve para que respondas en voz alta. Al final están las respuestas.
+Uno. [[Être]], présent.
+~Nous ... contents.
+Dos. [[Aller]], futur proche.
+~Demain, je ... ... au cinéma.
+Tres. [[Venir]], impératif, [[vous]].
+~... ici, s'il vous plaît !
+Cuatro. [[Voir]], passé composé.
+~Hier, j'... ... un bon film.
+Cinco. [[Faire]], imparfait.
+~Quand j'étais petit, je ... du vélo.
+Seis. [[Pouvoir]], futur simple.
+~Elle ... nous aider demain.
+Siete. [[Aller]], passé composé.
+~Elle ... ... à Paris.
+Ocho. [[Dire]], impératif negativo, [[tu]].
+~Ne le ... pas !
+Respuestas.
+Uno:
+~sommes. Nous sommes contents.
+Dos:
+~vais aller. Demain, je vais aller au cinéma.
+Tres:
+~Venez. Venez ici, s'il vous plaît !
+Cuatro:
+~ai vu. Hier, j'ai vu un bon film.
+Cinco:
+~faisais. Je faisais du vélo.
+Seis:
+~pourra. Elle pourra nous aider demain.
+Siete:
+~est allée. Elle est allée à Paris.
+Ocho:
+~dis. Ne le dis pas !`],
+["Consejos de estudio",`Aprende en bloques: un tiempo por día, con los diez verbos, antes de pasar al siguiente.
+Di las frases en voz alta e imita el ritmo.
+Escribe tus propias frases sobre tu vida o tu trabajo, usando cada tiempo al menos tres veces.
+Repasa los irregulares, es decir, los radicales de futuro y los participios, con tarjetas de memoria: son lo que más cuesta recordar.
+Contrasta pares como [[imparfait]] y [[passé composé]], o [[futur proche]] y [[futur simple]], con una frase de cada uno sobre el mismo tema.
+Fin de la guía. Bon courage !`]
+];
+const syn=window.speechSynthesis;
+const $=id=>document.getElementById(id);
+let ci=0,si=0,playing=false,gen=0,segs=[],voices=[];
+if(!syn)$('warn').style.display='block';
+
+function parse(t){return t.split('\n').map(line=>{
+ if(line[0]==='~')return [{l:'fr',t:line.slice(1)}];
+ return line.split(/\[\[(.+?)\]\]/).map((s,i)=>({l:i%2?'fr':'es',t:s})).filter(s=>s.t.trim());
+});}
+
+function load(i,keep){
+ ci=i;si=0;segs=[];
+ $('ct').textContent=C[i][0];
+ const box=$('txt');box.innerHTML='';
+ parse(C[i][1]).forEach((parts,li)=>{
+  const p=document.createElement('div');p.className='l';p.tabIndex=0;
+  parts.forEach(s=>{
+   const sp=document.createElement('span');sp.textContent=s.t;if(s.l==='fr')sp.className='f';p.appendChild(sp);
+   segs.push({l:s.l,t:s.t,el:p,idx:segs.length});
+  });
+  const first=segs.length-parts.length;
+  const go=()=>{si=first;if(!playing)playing=true,upd();say();};
+  p.onclick=go;p.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}};
+  box.appendChild(p);
+ });
+ [...$('nav').children].forEach((b,k)=>b.setAttribute('aria-current',k===i));
+ $('nav').children[i].scrollIntoView({inline:'center',block:'nearest'});
+ mark();window.scrollTo(0,0);
+}
+function mark(){
+ document.querySelectorAll('.l.on').forEach(e=>e.classList.remove('on'));
+ const s=segs[si];if(s){s.el.classList.add('on');if(playing)s.el.scrollIntoView({block:'center',behavior:'smooth'});}
+ $('pg').style.width=(segs.length?si/segs.length*100:0)+'%';
+}
+function upd(){$('pp').textContent=playing?'Pausar':'Escuchar';}
+function pick(lang){const sel=$(lang==='fr'?'vfr':'ves');return voices.find(v=>v.voiceURI===sel.value);}
+function say(){
+ if(!syn)return;
+ syn.cancel();const g=++gen;
+ if(si>=segs.length){
+  if(ci<C.length-1){load(ci+1);if(playing)say();}else{playing=false;upd();}
+  return;
+ }
+ mark();
+ const s=segs[si];
+ setTimeout(()=>{
+  if(g!==gen)return;
+  const u=new SpeechSynthesisUtterance(s.t);
+  u.lang=s.l==='fr'?'fr-FR':'es-ES';
+  const v=pick(s.l);if(v)u.voice=v;
+  u.rate=parseFloat($('rate').value);
+  u.onend=()=>{if(g===gen&&playing){si++;say();}};
+  u.onerror=e=>{if(g===gen&&playing&&e.error!=='interrupted'&&e.error!=='canceled'){si++;say();}};
+  syn.speak(u);
+ },40);
+}
+$('pp').onclick=()=>{
+ if(playing){playing=false;gen++;syn&&syn.cancel();}
+ else{playing=true;say();}
+ upd();
+};
+$('prev').onclick=()=>{gen++;syn&&syn.cancel();load(Math.max(0,ci-1));if(playing)say();};
+$('next').onclick=()=>{gen++;syn&&syn.cancel();load(Math.min(C.length-1,ci+1));if(playing)say();};
+$('rate').onchange=()=>{if(playing)say();};
+$('ves').onchange=$('vfr').onchange=()=>{if(playing)say();};
+
+function fill(){
+ voices=syn?syn.getVoices():[];
+ [['ves','es'],['vfr','fr']].forEach(([id,p])=>{
+  const sel=$(id),cur=sel.value;sel.innerHTML='';
+  const list=voices.filter(v=>v.lang.toLowerCase().startsWith(p));
+  list.sort((a,b)=>/Natural|Neural|Premium|Enhanced|Google/i.test(b.name)-/Natural|Neural|Premium|Enhanced|Google/i.test(a.name));
+  list.forEach(v=>{const o=document.createElement('option');o.value=v.voiceURI;o.textContent=v.name+' ('+v.lang+')';sel.appendChild(o);});
+  if(cur)sel.value=cur;
+ });
+}
+if(syn){fill();syn.onvoiceschanged=fill;}
+C.forEach((c,i)=>{const b=document.createElement('button');b.textContent=(i+1)+'. '+c[0];b.onclick=()=>{gen++;syn&&syn.cancel();load(i);if(playing)say();};$('nav').appendChild(b);});
+load(0);
+</script>
+</body>
+</html>

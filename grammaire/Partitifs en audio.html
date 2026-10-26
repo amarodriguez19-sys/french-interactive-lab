@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Partitifs en audio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#F3F5F7;--surface:#FFFFFF;--ink:#14202B;--mute:#566574;--line:#D5DCE3;
+--du:#1F5FBF;--dela:#B82A73;--del:#0C7F70;--des:#9C6208;--btn:#14202B;--btnt:#FFFFFF;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F161D;--surface:#18212B;--ink:#EEF2F6;--mute:#9AABBB;--line:#2B3844;
+--du:#7FB0FF;--dela:#FF8FC2;--del:#5FD9C6;--des:#F0B65A;--btn:#EEF2F6;--btnt:#0F161D}}
+:root[data-theme="dark"]{--bg:#0F161D;--surface:#18212B;--ink:#EEF2F6;--mute:#9AABBB;--line:#2B3844;
+--du:#7FB0FF;--dela:#FF8FC2;--del:#5FD9C6;--des:#F0B65A;--btn:#EEF2F6;--btnt:#0F161D}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+main{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:2rem;font-weight:800;margin:8px 0 4px;letter-spacing:-.02em}
+p.lead{color:var(--mute);margin:0 0 20px}
+.four{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+.four div{background:var(--surface);border:2px solid currentColor;border-radius:14px;padding:12px 14px}
+.four b{display:block;font-size:2.1rem;font-weight:800;line-height:1.1}
+.four span{display:block;font-size:.88rem;color:var(--mute)}
+.c1{color:var(--du)}.c2{color:var(--dela)}.c3{color:var(--del)}.c4{color:var(--des)}
+.now{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:18px;min-height:112px}
+.now .big{font-size:1.7rem;font-weight:800;line-height:1.2;min-height:2.1rem;overflow-wrap:anywhere}
+.now .sub{color:var(--mute);font-size:.95rem;min-height:1.4rem}
+.ctrl{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:8px;font-size:.92rem}
+select,button{font:inherit}
+select{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:4px 8px}
+.track{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px;display:flex;gap:14px;align-items:center;justify-content:space-between}
+.track h2{font-size:1.1rem;margin:0 0 2px}
+.track p{margin:0;color:var(--mute);font-size:.92rem}
+.play{flex:none;min-width:92px;background:var(--btn);color:var(--btnt);border:0;border-radius:999px;padding:11px 18px;font-weight:600;cursor:pointer}
+.play:focus-visible,select:focus-visible{outline:3px solid var(--du);outline-offset:2px}
+.track.on{border-color:var(--ink)}
+.note{color:var(--mute);font-size:.85rem;margin-top:18px}
+</style>
+</head>
+<body>
+<main>
+<h1>Partitifs en audio</h1>
+<p class="lead">Escucha, responde en voz alta en la pausa y compara con la respuesta. Úsalo caminando, sin mirar la pantalla.</p>
+
+<div class="four" aria-label="Los cuatro partitivos">
+<div class="c1"><b>du</b><span>masculino: du lait</span></div>
+<div class="c2"><b>de la</b><span>femenino: de la farine</span></div>
+<div class="c3"><b>de l’</b><span>vocal o h: de l’eau</span></div>
+<div class="c4"><b>des</b><span>plural: des œufs</span></div>
+</div>
+
+<section class="now" aria-live="polite">
+<div class="big" id="big">Elige una pista</div>
+<div class="sub" id="sub">Pulsa Escuchar para empezar</div>
+<div class="ctrl">
+<label>Velocidad <select id="rate"><option value="0.7">Lenta</option><option value="0.85" selected>Normal</option><option value="1">Rápida</option></select></label>
+<label><input type="checkbox" id="loop" checked> Repetir en bucle</label>
+</div>
+</section>
+
+<div id="tracks"></div>
+
+<p class="note">El audio usa las voces de tu dispositivo (francés y español). Si no oyes francés, instala una voz «fr-FR» en los ajustes de idioma de tu teléfono o navegador.</p>
+</main>
+
+<script>
+(function(){
+var S = window.speechSynthesis, token = 0, playing = null;
+var voices = [];
+function loadVoices(){ if(S){ voices = S.getVoices() || []; } }
+loadVoices(); if(S){ S.onvoiceschanged = loadVoices; }
+function pick(lang){
+  var l = lang.slice(0,2);
+  var exact = voices.filter(function(v){return v.lang.replace('_','-').toLowerCase()===lang.toLowerCase();});
+  if(exact.length) return exact[0];
+  var part = voices.filter(function(v){return v.lang.toLowerCase().indexOf(l)===0;});
+  return part[0] || null;
+}
+function rate(){ return parseFloat(document.getElementById('rate').value); }
+function say(text, lang){
+  return new Promise(function(res){
+    if(!S){ res(); return; }
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = lang; var v = pick(lang); if(v) u.voice = v;
+    u.rate = rate(); u.onend = res; u.onerror = res;
+    S.speak(u);
+  });
+}
+function wait(ms){ return new Promise(function(r){ setTimeout(r, ms / rate()); }); }
+function fr(t, big, sub){ return {k:'fr', t:t, big:big||t, sub:sub||''}; }
+function es(t, big, sub){ return {k:'es', t:t, big:big||t, sub:sub||''}; }
+function p(ms, big, sub){ return {k:'p', ms:ms, big:big, sub:sub}; }
+
+function drill(pairs, qlabel){
+  var out = [];
+  pairs.forEach(function(x){
+    out.push(fr(x[0], x[0], qlabel));
+    out.push(p(2800, x[0], 'Responde en voz alta…'));
+    out.push(fr(x[1], x[1], 'Respuesta'));
+    out.push(p(900));
+  });
+  return out;
+}
+
+var chant = [es('Los cuatro partitivos. Repite conmigo.', 'Los cuatro partitivos', 'Repite en voz alta')];
+for(var i=0;i<3;i++){
+  chant.push(fr('Masculin. Du.', 'masculin → du', 'du lait'));  chant.push(p(900));
+  chant.push(fr('Féminin. De la.', 'féminin → de la', 'de la farine')); chant.push(p(900));
+  chant.push(fr('Voyelle ou H. De l’.', 'voyelle / h → de l’', 'de l’eau')); chant.push(p(900));
+  chant.push(fr('Pluriel. Des.', 'pluriel → des', 'des œufs')); chant.push(p(1400));
+}
+chant.push(fr('Du lait, du pain, du courage.', 'du lait · du pain · du courage'));
+chant.push(fr('De la farine, de la patience, de la chance.', 'de la farine · de la patience · de la chance'));
+chant.push(fr('De l’eau, de l’argent, de l’huile.', 'de l’eau · de l’argent · de l’huile'));
+chant.push(fr('Des œufs, des fruits, des pâtes.', 'des œufs · des fruits · des pâtes'));
+chant.push(p(1500));
+
+var T = [
+ {id:'chant', title:'1. El cántico', desc:'Las cuatro reglas, tres veces, con ejemplos', steps:chant},
+ {id:'art', title:'2. Del artículo al partitivo', desc:'Oyes «le lait», dices «du lait»', steps:drill([
+  ['le lait','du lait'],['la farine','de la farine'],['l’eau','de l’eau'],['les œufs','des œufs'],
+  ['le pain','du pain'],['la patience','de la patience'],['l’argent','de l’argent'],['les fruits','des fruits'],
+  ['le courage','du courage'],['la chance','de la chance'],['l’huile','de l’huile'],['les pâtes','des pâtes'],
+  ['le sucre','du sucre'],['la viande','de la viande'],['le vent','du vent'],['la musique','de la musique']
+ ], 'Artículo definido → partitivo')},
+ {id:'qty', title:'3. Cantidad = «de»', desc:'Tras beaucoup, un kilo, un peu… siempre de', steps:(function(){
+  var a=[es('Cantidad expresada. Siempre de.','Cantidad expresada → de')];
+  ['beaucoup de sucre','un kilo de farine','un peu d’eau','une bouteille d’eau','un paquet de café','assez de temps','beaucoup d’amis','un pot de moutarde','j’ai besoin de vacances','j’ai envie de soleil','une salade sans huile'].forEach(function(s){
+    a.push(fr(s)); a.push(p(1200)); a.push(fr(s)); a.push(p(1100));
+  }); return a; })()},
+ {id:'neg', title:'4. Negación = «pas de»', desc:'Oyes la frase afirmativa, dices la negativa', steps:(function(){
+  var a=drill([
+   ['Il y a du sucre','Il n’y a pas de sucre'],['Je mange de la viande','Je ne mange pas de viande'],
+   ['Elle a de l’énergie','Elle n’a pas d’énergie'],['Nous avons des légumes','Nous n’avons pas de légumes'],
+   ['Il boit du café','Il ne boit pas de café'],['Tu as de la chance','Tu n’as pas de chance'],
+   ['J’achète des pommes','Je n’achète pas de pommes'],['Vous avez du courage','Vous n’avez pas de courage']
+  ], 'Pon la frase en negativo');
+  a.push(es('Excepción: la oposición conserva el partitivo.','Excepción: oposición'));
+  a.push(fr('Ce n’est pas du miel, c’est de la confiture.')); a.push(p(1500));
+  return a; })()},
+ {id:'mix', title:'5. Frases para repetir', desc:'Modelos completos: escucha y repite igual', steps:(function(){
+  var a=[];
+  ['Pour faire des crêpes, il faut des œufs, du lait et de la farine.','Il faut de la patience pour être professeur.','Le matin, je bois du thé.','À midi, je mange des pâtes.','Il y a du soleil et du vent.','Je mange de la salade sans huile.','Paul a beaucoup d’amis.','Je n’ai pas de chance.'].forEach(function(s){
+    a.push(fr(s)); a.push(p(3000,s,'Repite…')); a.push(p(500));
+  }); return a; })()}
+];
+
+var box = document.getElementById('tracks'), big = document.getElementById('big'), sub = document.getElementById('sub');
+T.forEach(function(tr){
+  var d = document.createElement('div'); d.className='track'; d.id='t-'+tr.id;
+  d.innerHTML = '<div><h2>'+tr.title+'</h2><p>'+tr.desc+'</p></div>';
+  var b = document.createElement('button'); b.className='play'; b.textContent='Escuchar'; b.id='b-'+tr.id;
+  b.onclick = function(){ if(playing===tr.id){ stop(); } else { run(tr); } };
+  d.appendChild(b); box.appendChild(d);
+});
+
+function ui(){
+  T.forEach(function(tr){
+    var on = playing===tr.id;
+    document.getElementById('b-'+tr.id).textContent = on ? 'Parar' : 'Escuchar';
+    document.getElementById('t-'+tr.id).className = 'track' + (on ? ' on' : '');
+  });
+}
+function stop(){ token++; if(S) S.cancel(); playing=null; ui(); }
+async function run(tr){
+  stop(); var my = ++token; playing = tr.id; ui();
+  if(!S){ big.textContent='Sin audio'; sub.textContent='Tu navegador no admite síntesis de voz.'; playing=null; ui(); return; }
+  do {
+    for(var i=0;i<tr.steps.length;i++){
+      if(my!==token) return;
+      var s = tr.steps[i];
+      if(s.big!==undefined) big.textContent = s.big;
+      if(s.sub!==undefined) sub.textContent = s.sub;
+      if(s.k==='p') await wait(s.ms);
+      else await say(s.t, s.k==='fr' ? 'fr-FR' : 'es-ES');
+    }
+  } while(document.getElementById('loop').checked && my===token);
+  if(my===token){ playing=null; ui(); big.textContent='¡Listo!'; sub.textContent='Pulsa otra pista o repite esta.'; }
+}
+window.addEventListener('pagehide', stop);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>French Verb Tenses – Interactive Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{--bg:#faf8f4;--card:#fff;--tx:#1d2433;--mut:#5d6677;--bd:#e4dfd5;--ac:#2b50aa;--ac2:#e8eefc;--hl:#c0392b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171f;--card:#1d2230;--tx:#e9ecf3;--mut:#9aa3b5;--bd:#303750;--ac:#8fb0ff;--ac2:#25304f;--hl:#ff8a7a}}
+:root[data-theme="dark"]{--bg:#14171f;--card:#1d2230;--tx:#e9ecf3;--mut:#9aa3b5;--bd:#303750;--ac:#8fb0ff;--ac2:#25304f;--hl:#ff8a7a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 40px}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:1.7rem;margin:0 0 4px}
+.sub{color:var(--mut);margin:0 0 16px}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px}
+.tab{flex:0 0 auto;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 13px;border-radius:999px;cursor:pointer;font:inherit;font-size:.9rem}
+.tab[aria-selected="true"]{background:var(--ac);color:#fff;border-color:var(--ac)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tab[aria-selected="true"]{color:#10162a}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px}
+.badge{display:inline-block;font-size:.75rem;background:var(--ac2);color:var(--ac);padding:2px 10px;border-radius:999px;margin-bottom:8px}
+h2{font-family:Georgia,serif;margin:0 0 6px;font-size:1.4rem}
+.row{margin:8px 0;color:var(--tx)}
+.row b{color:var(--mut);font-weight:600}
+.ex{font-style:italic;border-left:3px solid var(--ac);padding-left:10px;margin:10px 0}
+.verbs{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 10px}
+.chip{border:1px solid var(--bd);background:transparent;color:var(--tx);padding:5px 12px;border-radius:8px;cursor:pointer;font:inherit;font-size:.9rem}
+.chip[aria-pressed="true"]{background:var(--ac2);border-color:var(--ac);color:var(--ac);font-weight:600}
+table{width:100%;border-collapse:collapse}
+td,th{padding:9px 10px;border-bottom:1px solid var(--bd);text-align:left}
+th{color:var(--mut);font-weight:600;font-size:.85rem}
+td.p{color:var(--mut);width:42%}
+td b{color:var(--hl);font-weight:700}
+.scroll{overflow-x:auto}
+.ov td:first-child{font-weight:600;white-space:nowrap}
+.ov tr{cursor:pointer}.ov tr:hover{background:var(--ac2)}
+.note{color:var(--mut);font-size:.85rem;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Les temps de l’indicatif… et plus</h1>
+<p class="sub">French verb tenses: pick a tab, then a verb. Red = the part that changes.</p>
+<div class="tabs" id="tabs" role="tablist"></div>
+<div class="card" id="panel"></div>
+</div>
+<script>
+var P=["je","tu","il/elle","nous","vous","ils/elles"];
+var SP=["que je","que tu","qu’il/elle","que nous","que vous","qu’ils/elles"];
+var V={parler:"parler",finir:"finir",vendre:"vendre","être":"être",avoir:"avoir",aller:"aller"};
+var PART={parler:"parlé",finir:"fini",vendre:"vendu","être":"été",avoir:"eu",aller:"allé"};
+var END6=["ais","ais","ait","ions","iez","aient"];
+function R(s,e){return e.map(function(x,i){return [Array.isArray(s)?s[i]:s,x]})}
+function J(arr){return arr.map(function(f){return [f,""]})}
+var PRES={
+ parler:R("parl",["e","es","e","ons","ez","ent"]),
+ finir:R(["fini","fini","fini","finiss","finiss","finiss"],["s","s","t","ons","ez","ent"]),
+ vendre:R("vend",["s","s","","ons","ez","ent"]),
+ "être":J(["suis","es","est","sommes","êtes","sont"]),
+ avoir:J(["ai","as","a","avons","avez","ont"]),
+ aller:J(["vais","vas","va","allons","allez","vont"])};
+var IMPS={parler:"parl",finir:"finiss",vendre:"vend","être":"ét",avoir:"av",aller:"all"};
+var FUTS={parler:"parler",finir:"finir",vendre:"vendr","être":"ser",avoir:"aur",aller:"ir"};
+var SUBS={parler:R("parl",["e","es","e","ions","iez","ent"]),finir:R("finiss",["e","es","e","ions","iez","ent"]),vendre:R("vend",["e","es","e","ions","iez","ent"]),
+ "être":J(["sois","sois","soit","soyons","soyez","soient"]),avoir:J(["aie","aies","ait","ayons","ayez","aient"]),aller:J(["aille","ailles","aille","allions","alliez","aillent"])};
+var IMPER={parler:["parle","parlons","parlez"],finir:["finis","finissons","finissez"],vendre:["vends","vendons","vendez"],"être":["sois","soyons","soyez"],avoir:["aie","ayons","ayez"],aller:["va","allons","allez"]};
+var AV_PRES=["ai","as","a","avons","avez","ont"],ET_PRES=["suis","es","est","sommes","êtes","sont"];
+function auxPres(v,i){return v==="aller"?ET_PRES[i]:AV_PRES[i]}
+function auxImp(v,i){return (v==="aller"?"ét":"av")+END6[i]}
+function part(v,i){var p=PART[v];if(v==="aller")p+=(i>=3?"(e)s":"(e)");return p}
+function compound(aux){return function(v){return [0,1,2,3,4,5].map(function(i){return [aux(v,i)+" ",part(v,i)]})}}
+var T=[
+{k:"pres",n:"Présent",m:"Indicatif",use:"Facts, habits, what is happening now, near future.",form:"Stem + endings. -er: e, es, e, ons, ez, ent · -ir: is, is, it, issons, issez, issent · -re: s, s, –, ons, ez, ent.",ex:"Je parle français tous les jours.",g:function(v){return PRES[v]}},
+{k:"pc",n:"Passé composé",m:"Indicatif",use:"Completed actions in the past; the everyday past in speech.",form:"avoir (or être) in présent + past participle. Être is used with aller, venir, rentrer, etc. and the participle agrees with the subject.",ex:"Hier, j’ai fini mon travail. / Elle est allée au marché.",g:compound(auxPres)},
+{k:"imp",n:"Imparfait",m:"Indicatif",use:"Habits in the past, descriptions, ongoing actions, background.",form:"Stem of nous (présent, without -ons) + ais, ais, ait, ions, iez, aient. Only être is irregular: ét-.",ex:"Quand j’étais petit, je jouais dehors.",g:function(v){return R(IMPS[v],END6).map(function(x,i){return [v==="aller"||v==="avoir"||v==="être"?x[0]:x[0],x[1]]})}},
+{k:"pqp",n:"Plus-que-parfait",m:"Indicatif",use:"An action that happened before another past action.",form:"avoir (or être) in imparfait + past participle.",ex:"Il avait déjà mangé quand je suis arrivé.",g:compound(auxImp)},
+{k:"fut",n:"Futur simple",m:"Indicatif",use:"Future actions, predictions, promises.",form:"Infinitive (drop the -e of -re verbs) + ai, as, a, ons, ez, ont. Irregular stems: ser-, aur-, ir-, fer-, ver-.",ex:"Demain, nous partirons à huit heures.",g:function(v){return R(FUTS[v],["ai","as","a","ons","ez","ont"])}},
+{k:"cond",n:"Conditionnel présent",m:"Conditionnel",use:"Politeness, wishes, hypotheses (with si + imparfait).",form:"Future stem + imparfait endings (ais, ais, ait, ions, iez, aient).",ex:"Si j’avais le temps, je voyagerais.",g:function(v){return R(FUTS[v],END6)}},
+{k:"subj",n:"Subjonctif présent",m:"Subjonctif",use:"After il faut que, vouloir que, bien que, pour que… (doubt, wish, emotion).",form:"Stem of ils (présent) + e, es, e, ions, iez, ent. Irregular: être, avoir, aller, faire, pouvoir, savoir.",ex:"Il faut que tu finisses tes devoirs.",g:function(v){return SUBS[v]},pro:SP},
+{k:"impe",n:"Impératif",m:"Impératif",use:"Orders, advice, invitations. Only 3 persons, no subject pronoun.",form:"Same as présent for tu / nous / vous; -er verbs lose the -s in tu (parle). Irregular: être, avoir.",ex:"Parlez plus lentement, s’il vous plaît !",g:function(v){return IMPER[v].map(function(f){return [f,""]})},pro:["(tu)","(nous)","(vous)"]}
+];
+var state={tab:"ov",verb:"parler"};
+var tabsEl=document.getElementById("tabs"),panel=document.getElementById("panel");
+function pron(i,f,list){
+ if(list===undefined){return (i===0&&/^[aeiouhàâéèêîôû]/i.test(f))?"j’":P[i]+" "}
+ if(list===SP&&i===0)return (/^[aeiouhàâéèêîôû]/i.test(f))?"que j’":"que je ";
+ return list[i]+(list[i].slice(-1)==="’"?"":" ")}
+function renderTabs(){
+ var h='<button class="tab" role="tab" data-t="ov" aria-selected="'+(state.tab==="ov")+'">Overview</button>';
+ T.forEach(function(t){h+='<button class="tab" role="tab" data-t="'+t.k+'" aria-selected="'+(state.tab===t.k)+'">'+t.n+'</button>'});
+ tabsEl.innerHTML=h;
+ [].forEach.call(tabsEl.children,function(b){b.onclick=function(){state.tab=b.dataset.t;render()}})}
+function render(){
+ renderTabs();
+ if(state.tab==="ov"){
+  var h='<span class="badge">Overview</span><h2>8 essential tenses &amp; moods</h2><p class="row">Tap a row to open it.</p><div class="scroll"><table class="ov"><tr><th>Tense</th><th>Mood</th><th>Main use</th></tr>';
+  T.forEach(function(t){h+='<tr data-t="'+t.k+'"><td>'+t.n+'</td><td>'+t.m+'</td><td>'+t.use+'</td></tr>'});
+  h+='</table></div><p class="note">Simple tenses = one word (présent, imparfait, futur…). Compound tenses = auxiliary + past participle (passé composé, plus-que-parfait).</p>';
+  panel.innerHTML=h;
+  [].forEach.call(panel.querySelectorAll("tr[data-t]"),function(r){r.onclick=function(){state.tab=r.dataset.t;render();window.scrollTo(0,0)}});
+  return}
+ var t=T.filter(function(x){return x.k===state.tab})[0];
+ var rows=t.g(state.verb);
+ var h='<span class="badge">'+t.m+'</span><h2>'+t.n+'</h2>'
+  +'<div class="row"><b>Use:</b> '+t.use+'</div><div class="row"><b>Formation:</b> '+t.form+'</div><div class="ex">'+t.ex+'</div><div class="verbs">';
+ Object.keys(V).forEach(function(v){h+='<button class="chip" data-v="'+v+'" aria-pressed="'+(state.verb===v)+'">'+v+'</button>'});
+ h+='</div><table><tr><th>Subject</th><th>'+state.verb+'</th></tr>';
+ rows.forEach(function(r,i){
+  var full=r[0]+r[1];
+  var p=pron(i,full,t.pro);
+  h+='<tr><td class="p">'+(t.pro&&t.pro!==SP?t.pro[i]:p.trim())+'</td><td>'+r[0]+(r[1]?'<b>'+r[1]+'</b>':'')+'</td></tr>'});
+ h+='</table>';
+ if(t.k==="pc"||t.k==="pqp")h+='<p class="note">Red = past participle. “aller” takes être, so the participle agrees: allé(e), allé(e)s.</p>';
+ if(["pres","subj","impe"].indexOf(t.k)>-1&&["être","avoir","aller"].indexOf(state.verb)>-1)h+='<p class="note">Irregular verb: forms must be memorised.</p>';
+ panel.innerHTML=h;
+ [].forEach.call(panel.querySelectorAll(".chip"),function(b){b.onclick=function(){state.verb=b.dataset.v;render()}})}
+render();
+</script>
+</body>
+</html>
