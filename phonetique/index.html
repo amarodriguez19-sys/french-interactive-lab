@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phonétique — French Interactive Lab</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            font-size: 1.1rem;
+            color: #64748b;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .card p {
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 8px;
+            background-color: #000;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="../" class="back-link">← Volver al inicio</a>
+        
+        <header>
+            <h1>🎙️ Section Phonétique</h1>
+            <p class="subtitle">Recursos multimedia y guías prácticas de pronunciación en francés (A2)</p>
+        </header>
+
+        <div class="grid">
+            <!-- Video 1: Verbos Pronominales -->
+            <div class="card">
+                <div>
+                    <h2>Verbos Pronominales</h2>
+                    <p>Explicación audiovisual sobre cómo funcionan y se pronuncian los verbos pronominales en francés.</p>
+                </div>
+                <video controls preload="metadata">
+                    <source src="./C%C3%B3mo_Funcionan_los_Verbos_Pronominales.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
+
+            <!-- Video 2: Sonido euil -->
+            <div class="card">
+                <div>
+                    <h2>Dominar el sonido "euil"</h2>
+                    <p>Consejos y práctica guiada para dominar este sonido complejo de la fonética francesa.</p>
+                </div>
+                <video controls preload="metadata">
+                    <source src="./C%C3%B3mo_dominar_el_dif%C3%ADcil_sonido_franc%C3%A9s_euil.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
+
+            <!-- Video 3: Vocales francesas -->
+            <div class="card">
+                <div>
+                    <h2>Dominar las Vocales Francesas</h2>
+                    <p>Lección multimedia enfocada en la correcta articulación y distinción de las vocales.</p>
+                </div>
+                <video controls preload="metadata">
+                    <source src="./C%C3%B3mo_dominar_las_vocales_francesas.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
+        </div>
+
+        <footer>
+            <p>French Interactive Lab</p>
+        </footer>
+    </div>
+
+</body>
+</html>
