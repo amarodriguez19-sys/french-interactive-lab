@@ -87,7 +87,25 @@ const EXAM=[
 ["Ils ___ le bus tous les jours.",["prend","prends","prennent","prenent"],2,"Prendre: ils/elles prennent.","Verbes"],
 ["Vous ___ quoi ce soir ?",["faisez","faites","faîtes","faisent"],1,"Faire: vous faites (forma irregular).","Verbes"],
 ["Il ___ vingt-cinq ans.",["est","a","fait","as"],1,"La edad se expresa con «avoir», no con «être».","Verbes"],
-["___ la porte, s'il te plaît !",["Fermes","Fermer","Ferme","Fermé"],2,"Imperativo de verbos en -er: sin «s» en «tu» → «Ferme».","Impératif"]
+["___ la porte, s'il te plaît !",["Fermes","Fermer","Ferme","Fermé"],2,"Imperativo de verbos en -er: sin «s» en «tu» → «Ferme».","Impératif"],
+["Voici Marie et ___ frère.",["sa","son","ses","leur"],1,"«Frère» es masculino singular y el poseedor es «elle»: son.","Possessifs"],
+["Nous adorons ___ voisins.",["notre","nos","votre","leurs"],1,"Plural con «nous»: nos.","Possessifs"],
+["Ils ont perdu ___ clés.",["leur","leurs","vos","mon"],1,"Varios objetos con «ils»: leurs.","Possessifs"],
+["Ce vélo est à moi : c'est ___.",["le mien","la mienne","le tien","les miens"],0,"Pronombre masculino singular, poseedor «je»: le mien.","Possessifs"],
+["J'ai mal ___ tête.",["à ma","à la","au","à sa"],1,"Con partes del cuerpo se usa el artículo: à la tête.","Possessifs"],
+["___ amie s'appelle Lola. (tu)",["Ta","Ton","Tes","Tu"],1,"Ma, ta, sa pasan a mon, ton, son ante vocal: Ton amie.","Possessifs"],
+["___ livre est intéressant.",["Ce","Cet","Cette","Ces"],0,"Masculino singular ante consonante: ce.","Démonstratifs"],
+["___ hôtel est très cher.",["Ce","Cet","Cette","Ces"],1,"Masculino singular ante vocal o h muda: cet.","Démonstratifs"],
+["Tu aimes ___ robe ?",["ce","cet","cette","ces"],2,"Femenino singular: cette.","Démonstratifs"],
+["___ enfants sont gentils.",["Ce","Cet","Cette","Ces"],3,"Plural: ces.","Démonstratifs"],
+["___ heure est-il ?",["Quel","Quelle","Quels","Quelles"],1,"«Heure» es femenino singular: quelle.","Quel"],
+["Je n'ai pas ___ frère.",["un","de","du","le"],1,"Tras una negación, un / une pasan a de.","Articles"],
+["Elle est ___ médecin.",["un","le","la","— (sin artículo)"],3,"Las profesiones sin adjetivo no llevan artículo.","Articles"],
+["Il fait ___ sport tous les jours.",["le","du","un","des"],1,"Faire + deporte: du sport.","Articles"],
+["Je vais ___ Canada.",["en","au","aux","à"],1,"Países masculinos: au Canada.","Articles"],
+["J'habite ___ Pays-Bas.",["au","aux","en","à"],1,"Países plurales: aux Pays-Bas.","Articles"],
+["Il joue ___ guitare.",["à la","de la","la","une"],1,"Jouer de + instrumento: de la guitare.","Articles"],
+["Nous parlons ___ directeur.",["à le","au","du","aux"],1,"à + le = au.","Articles"]
 ];
 // Tarjetas: [francés, inglés, categoría]
 const CARDS=[
@@ -120,7 +138,20 @@ const CARDS=[
 ["J'ai mal à la tête","My head hurts: body parts take the article, not the possessive, when the owner is obvious","Possessifs"],
 ["mon ami → [mɔ̃n ami]","Liaison with a vowel is required, except before an aspirated h (mes | héros)","Possessifs"],
 ["notre / le nôtre","notre = adjective (with a noun); le nôtre = pronoun (replaces a noun, with ô)","Possessifs"],
-["On est fiers de notre équipe","'On' meaning 'nous' takes notre / nos; 'on' meaning 'everyone' takes son / sa / ses","Possessifs"]
+["On est fiers de notre équipe","'On' meaning 'nous' takes notre / nos; 'on' meaning 'everyone' takes son / sa / ses","Possessifs"],
+/* --- Articles et déterminants --- */
+["le / la / l' / les","the (definite article)","Articles"],["un / une / des","a, an / some (indefinite)","Articles"],
+["du / de la / de l' / des","some (partitive: a part of something)","Articles"],
+["au / aux","to the (à + le / à + les)","Articles"],["du / des","of the (de + le / de + les)","Articles"],
+["Je ne mange pas de pain","I don't eat bread (after a negation: de)","Articles"],["beaucoup de monde","a lot of people (quantity + de)","Articles"],
+["ce / cet / cette / ces","this, that / these, those","Articles"],["ce livre","this book","Articles"],["cet ami","this friend (cet before a vowel)","Articles"],
+["cette maison","this house","Articles"],["ces enfants","these children","Articles"],
+["quel / quelle / quels / quelles","which, what (agrees with the noun)","Articles"],["Quel âge as-tu ?","How old are you?","Articles"],["Quelle heure est-il ?","What time is it?","Articles"],
+["à Paris","in / to Paris (cities use à)","Articles"],["en France","in / to France (feminine country)","Articles"],
+["au Canada","in / to Canada (masculine country)","Articles"],["aux États-Unis","in / to the United States (plural)","Articles"],
+["Elle est médecin","She is a doctor (no article for professions)","Articles"],["faire du sport","to do sports","Articles"],
+["jouer au tennis","to play tennis (jouer à + sport)","Articles"],["jouer de la guitare","to play the guitar (jouer de + instrument)","Articles"],
+["le lundi","on Mondays (habit: with article)","Articles"],["tout le monde","everyone","Articles"],["tous les jours","every day","Articles"]
 ];
 
 /* ============ UTILIDADES ============ */

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artículos y posesivos — French Interactive Lab</title>
+<style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mute:#64748b;--line:#e2e8f0;--blue:#2563eb;--ok:#15803d;--okbg:#dcfce7;--ko:#b91c1c;--kobg:#fee2e2;--soft:#eef2ff;--r:12px}
+@media(prefers-color-scheme:dark){:root{--bg:#0f172a;--card:#1e293b;--ink:#f1f5f9;--mute:#94a3b8;--line:#334155;--blue:#60a5fa;--ok:#4ade80;--okbg:#14532d;--ko:#fca5a5;--kobg:#7f1d1d;--soft:#1e293b}}
+*{box-sizing:border-box}
+body{margin:0;padding:24px 16px 48px;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;display:flex;justify-content:center}
+main{width:100%;max-width:680px}
+h1{font:700 1.7rem/1.2 Georgia,serif;margin:0 0 4px}
+h2{font:700 1.15rem/1.3 Georgia,serif;margin:22px 0 6px}
+.sub{color:var(--mute);margin:0 0 18px}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.tabs{display:flex;gap:6px;border-bottom:2px solid var(--line);margin-bottom:18px}
+.tab{background:none;border:0;padding:10px 16px;font-size:1rem;font-weight:600;color:var(--mute);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
+.tab[aria-selected=true]{color:var(--blue);border-color:var(--blue)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.chip{border:1.5px solid var(--line);background:none;color:var(--ink);border-radius:20px;padding:5px 13px;font-size:.92rem;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn{background:var(--blue);color:#fff;border:0;border-radius:8px;padding:10px 18px;font-size:1rem;font-weight:600;cursor:pointer}
+.btn.ghost{background:none;color:var(--blue);border:1.5px solid var(--blue)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.bar i{display:block;height:100%;background:var(--blue);transition:width .3s}
+.meta{color:var(--mute);font-size:.9rem;display:flex;justify-content:space-between}
+.q{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-top:12px}
+.t{font:1.4rem/1.45 Georgia,serif;margin:0 0 4px}
+.t b{color:var(--ok);border-bottom:2px solid var(--ok)}
+.hint{color:var(--mute);font-size:.9rem;margin:0 0 14px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:12px 14px;font:1.15rem Georgia,serif;color:var(--ink);cursor:pointer}
+.opt small{font:.8rem system-ui;color:var(--mute);margin-right:8px}
+.opt:hover:not(:disabled){border-color:var(--blue)}
+.opt.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok);font-weight:700}
+.opt.ko{background:var(--kobg);border-color:var(--ko);color:var(--ko)}
+.fb{margin-top:14px;padding:12px 14px;border-radius:8px;background:var(--bg);border-left:4px solid var(--blue)}
+.score{font:700 3rem/1 Georgia,serif;color:var(--blue)}
+.rev{border-top:1px solid var(--line);padding:10px 0}
+.tb{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:.98rem}
+.tb th,.tb td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.tb th{background:var(--soft)}
+.fr{font-family:Georgia,serif;font-weight:700}
+.note{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin-top:10px}
+[hidden]{display:none!important}
+@media(max-width:480px){.opts{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<h1>Les articles et les possessifs</h1>
+<p class="sub">Artículos definidos, indefinidos, partitivos, contractos, negación, cantidades, posesivos, demostrativos y usos especiales.</p>
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" id="t1" aria-selected="true" aria-controls="p1">Practicar</button>
+  <button class="tab" role="tab" id="t2" aria-selected="false" aria-controls="p2">Resumen</button>
+</div>
+
+<section id="p1" role="tabpanel" aria-labelledby="t1"></section>
+
+<section id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+  <h2>Definidos: se conoce o se generaliza</h2>
+  <table class="tb"><tr><th></th><th>Masculino</th><th>Femenino</th></tr>
+  <tr><td>Singular</td><td class="fr">le</td><td class="fr">la</td></tr>
+  <tr><td>Vocal / h muda</td><td colspan="2" class="fr">l'</td></tr>
+  <tr><td>Plural</td><td colspan="2" class="fr">les</td></tr></table>
+  <p>Se usan para algo conocido o único (<i>le soleil</i>) y para generalizar con gustos: <i>J'aime le café.</i></p>
+
+  <h2>Indefinidos: uno cualquiera</h2>
+  <table class="tb"><tr><th>Masculino</th><th>Femenino</th><th>Plural</th></tr>
+  <tr><td class="fr">un</td><td class="fr">une</td><td class="fr">des</td></tr></table>
+
+  <h2>Partitivos: una parte de algo que no se cuenta</h2>
+  <table class="tb"><tr><th>Masculino</th><th>Femenino</th><th>Vocal / h muda</th><th>Plural</th></tr>
+  <tr><td class="fr">du</td><td class="fr">de la</td><td class="fr">de l'</td><td class="fr">des</td></tr></table>
+  <p><i>Je mange du pain.</i> · <i>Elle boit de l'eau.</i></p>
+
+  <h2>Contractos: preposición + artículo</h2>
+  <table class="tb"><tr><th>à + le</th><th>à + les</th><th>de + le</th><th>de + les</th></tr>
+  <tr><td class="fr">au</td><td class="fr">aux</td><td class="fr">du</td><td class="fr">des</td></tr></table>
+  <p>Con <b>la</b> y <b>l'</b> no hay contracción: <i>à la, à l', de la, de l'</i>.</p>
+
+  <h2>Negación y cantidades</h2>
+  <div class="note"><p style="margin:0">Después de una negación (<i>ne … pas, plus, jamais</i>), <b>un, une, du, de la, des</b> pasan a <b class="fr">de</b> (<b class="fr">d'</b> ante vocal): <i>Je ne mange pas de viande.</i></p></div>
+  <div class="note"><p style="margin:0">Después de una cantidad (<i>beaucoup, un peu, trop, assez, un kilo</i>) se usa <b class="fr">de</b> / <b class="fr">d'</b>: <i>beaucoup de monde, un kilo de pommes.</i></p></div>
+  <div class="note"><p style="margin:0">Excepción: con <i>être</i> en negación el artículo no cambia: <i>Ce n'est pas un chat.</i></p></div>
+
+  <h2>Posesivos: adjetivo (con un nombre)</h2>
+  <p style="margin:0 0 4px">Concuerda con lo poseído (género y número) y cambia según el poseedor.</p>
+  <table class="tb"><tr><th>Poseedor</th><th>Masc.</th><th>Fem.</th><th>Plural</th></tr>
+  <tr><td>je</td><td class="fr">mon</td><td class="fr">ma</td><td class="fr">mes</td></tr>
+  <tr><td>tu</td><td class="fr">ton</td><td class="fr">ta</td><td class="fr">tes</td></tr>
+  <tr><td>il / elle</td><td class="fr">son</td><td class="fr">sa</td><td class="fr">ses</td></tr>
+  <tr><td>nous</td><td colspan="2" class="fr">notre</td><td class="fr">nos</td></tr>
+  <tr><td>vous</td><td colspan="2" class="fr">votre</td><td class="fr">vos</td></tr>
+  <tr><td>ils / elles</td><td colspan="2" class="fr">leur</td><td class="fr">leurs</td></tr></table>
+  <div class="note"><p style="margin:0"><b>Ante vocal o h muda</b>, ma / ta / sa pasan a <b class="fr">mon / ton / son</b>: <i>mon amie, ton erreur, son hésitation</i>.</p></div>
+  <div class="note"><p style="margin:0"><b>Partes del cuerpo:</b> si el poseedor es obvio, se usa el artículo: <i>J'ai mal à la tête.</i></p></div>
+  <div class="note"><p style="margin:0"><b>«On»:</b> si equivale a «nous» → <i>notre / nos</i>; si significa «todo el mundo» → <i>son / sa / ses</i>.</p></div>
+
+  <h2>Posesivos: pronombre (sustituye al nombre)</h2>
+  <table class="tb"><tr><th>Poseedor</th><th>Masc. sing.</th><th>Fem. sing.</th><th>Masc. plur.</th><th>Fem. plur.</th></tr>
+  <tr><td>je</td><td class="fr">le mien</td><td class="fr">la mienne</td><td class="fr">les miens</td><td class="fr">les miennes</td></tr>
+  <tr><td>tu</td><td class="fr">le tien</td><td class="fr">la tienne</td><td class="fr">les tiens</td><td class="fr">les tiennes</td></tr>
+  <tr><td>il / elle</td><td class="fr">le sien</td><td class="fr">la sienne</td><td class="fr">les siens</td><td class="fr">les siennes</td></tr>
+  <tr><td>nous</td><td class="fr">le nôtre</td><td class="fr">la nôtre</td><td colspan="2" class="fr">les nôtres</td></tr>
+  <tr><td>vous</td><td class="fr">le vôtre</td><td class="fr">la vôtre</td><td colspan="2" class="fr">les vôtres</td></tr>
+  <tr><td>ils / elles</td><td class="fr">le leur</td><td class="fr">la leur</td><td colspan="2" class="fr">les leurs</td></tr></table>
+  <div class="note"><p style="margin:0"><b>Notre</b> (sin acento) es adjetivo y acompaña a un nombre; <b class="fr">le nôtre</b> (con ô) es pronombre.</p></div>
+
+  <h2>Demostrativos: este, esta, estos</h2>
+  <table class="tb"><tr><th>Masc. (consonante)</th><th>Masc. (vocal / h muda)</th><th>Femenino</th><th>Plural</th></tr>
+  <tr><td class="fr">ce</td><td class="fr">cet</td><td class="fr">cette</td><td class="fr">ces</td></tr></table>
+  <p><i>ce livre, cet ami, cette maison, ces enfants.</i></p>
+  <h2>Quel: qué, cuál</h2>
+  <table class="tb"><tr><th>Masc. sing.</th><th>Fem. sing.</th><th>Masc. plur.</th><th>Fem. plur.</th></tr>
+  <tr><td class="fr">quel</td><td class="fr">quelle</td><td class="fr">quels</td><td class="fr">quelles</td></tr></table>
+  <p><i>Quel âge as-tu ? Quelle heure est-il ?</i></p>
+  <h2>Países y ciudades</h2>
+  <table class="tb"><tr><th></th><th>Estar / ir a</th><th>Venir de</th></tr>
+  <tr><td>Ciudad</td><td class="fr">à Paris</td><td class="fr">de Paris</td></tr>
+  <tr><td>País femenino o con vocal</td><td class="fr">en France, en Iran</td><td class="fr">de France, d'Iran</td></tr>
+  <tr><td>País masculino</td><td class="fr">au Canada</td><td class="fr">du Canada</td></tr>
+  <tr><td>País plural</td><td class="fr">aux États-Unis</td><td class="fr">des États-Unis</td></tr></table>
+  <h2>Usos especiales</h2>
+  <div class="note"><p style="margin:0"><b>Sin artículo:</b> profesiones (<i>Elle est médecin</i>), parler + idioma (<i>Je parle français</i>) y un día concreto (<i>Je travaille lundi</i>).</p></div>
+  <div class="note"><p style="margin:0"><b>Faire / jouer:</b> <i>faire du sport</i>, <i>jouer au tennis</i> (à + deporte), <i>jouer de la guitare</i> (de + instrumento).</p></div>
+  <div class="note"><p style="margin:0"><b>Con artículo definido:</b> <i>le lundi</i> (cada lunes), <i>tout le monde</i>, <i>tous les jours</i>, <i>Elle a les yeux bleus</i>.</p></div>
+</section>
+</main>
+
+<script>
+/* ===== CONTENIDO (editable) =====
+   [frase con ___, respuesta correcta, [distractores], explicación, tema] */
+const TOPICS={D:"Definidos",I:"Indefinidos",P:"Partitivos",C:"Contractos",N:"Negación y cantidades",S:"Posesivos",T:"Demostrativos y quel",L:"Países y ciudades",U:"Usos especiales"};
+const ITEMS=[
+["___ livre est sur la table.","Le",["La","Les","L'"],"«Livre» es masculino singular: le.","D"],
+["___ école est fermée.","L'",["Le","La","Les"],"Ante vocal el artículo se elide: l'école.","D"],
+["J'adore ___ musique française.","la",["le","l'","les"],"«Musique» es femenino singular: la. Con adorer se generaliza.","D"],
+["___ enfants jouent dans le parc.","Les",["Le","La","L'"],"Plural → les.","D"],
+["J'aime ___ café.","le",["du","un","des"],"Con aimer, adorer o détester se usa el definido para generalizar.","D"],
+["___ hôtel est près de la gare.","L'",["Le","La","Les"],"La h muda se trata como vocal: l'hôtel.","D"],
+["___ France est un beau pays.","La",["Le","L'","Les"],"Los países terminados en -e suelen ser femeninos: la France.","D"],
+["J'ai ___ frère et deux sœurs.","un",["le","du","une"],"«Frère» es masculino y se trata de uno cualquiera: un.","I"],
+["Elle a ___ voiture rouge.","une",["un","la","des"],"«Voiture» es femenino singular: une.","I"],
+["Il y a ___ chats dans le jardin.","des",["les","du","de l'"],"Plural indefinido: des (no se traduce en español).","I"],
+["C'est ___ ami de Paul.","un",["l'","le","du"],"Un amigo cualquiera (masculino): un ami.","I"],
+["Tu as ___ idée ?","une",["un","des","de"],"«Idée» es femenino: une idée.","I"],
+["Je cherche ___ appartement.","un",["une","des","de l'"],"«Appartement» es masculino: un appartement.","I"],
+["Je mange ___ riz.","du",["de la","des","un"],"Cantidad no contable, masculino: du.","P"],
+["Elle boit ___ eau.","de l'",["du","de la","des"],"Ante vocal el partitivo es de l'.","P"],
+["Nous prenons ___ salade.","de la",["du","des","de l'"],"Femenino consonante: de la.","P"],
+["Il mange ___ légumes.","des",["du","de la","de l'"],"Plural: des.","P"],
+["Je voudrais ___ confiture.","de la",["du","des","de l'"],"«Confiture» es femenino: de la.","P"],
+["Tu veux ___ lait ?","du",["de la","des","de l'"],"«Lait» es masculino: du.","P"],
+["Je vais ___ cinéma.","au",["à le","à la","aux"],"à + le = au.","C"],
+["Elle parle ___ professeur.","au",["à la","aux","du"],"à + le = au.","C"],
+["Nous allons ___ États-Unis.","aux",["au","à la","à l'"],"à + les = aux.","C"],
+["Il revient ___ marché.","du",["de le","de la","des"],"de + le = du.","C"],
+["Voici la voiture ___ voisins.","des",["de les","du","aux"],"de + les = des.","C"],
+["Je téléphone ___ amie de Paul.","à l'",["au","à la","aux"],"Con l' no hay contracción: à l'.","C"],
+["C'est le sac ___ directrice.","de la",["du","des","de l'"],"Con la no hay contracción: de la.","C"],
+["Elle sort ___ hôpital.","de l'",["du","de la","des"],"Con l' no hay contracción: de l'.","C"],
+["Je ne mange pas ___ viande.","de",["de la","du","des"],"Tras una negación, el partitivo pasa a de.","N"],
+["Il n'a pas ___ voiture.","de",["une","de la","des"],"Tras una negación, un / une pasan a de.","N"],
+["Il y a beaucoup ___ monde.","de",["du","des","le"],"Tras una expresión de cantidad: de.","N"],
+["Elle a un peu ___ temps.","de",["du","le","des"],"«Un peu» + de.","N"],
+["Je n'ai plus ___ argent.","d'",["de l'","du","de"],"Tras la negación y ante vocal: d'.","N"],
+["Nous avons trop ___ travail.","de",["du","le","un"],"«Trop» + de.","N"],
+["Je voudrais un kilo ___ pommes.","de",["des","de la","les"],"Medida + de.","N"],
+["Ce n'est pas ___ chat, c'est un chien.","un",["de","d'","du"],"Con être la negación no cambia el artículo.","N"],
+/* --- Possessifs --- */
+["J'ai oublié ___ sac. (je)","mon",["ma","mes","son"],"«Sac» es masculino singular y el poseedor es «je»: mon.","S"],
+["Elle aime ___ sœur. (elle)","sa",["son","ses","ta"],"«Sœur» es femenino singular, poseedor «elle»: sa.","S"],
+["Tu as ___ livres ? (tu)","tes",["ses","mes","ton"],"«Livres» es plural y el poseedor es «tu»: tes.","S"],
+["Nous aimons ___ maison. (nous)","notre",["nos","votre","leur"],"Un solo objeto (femenino o masculino) con «nous»: notre.","S"],
+["Vous cherchez ___ enfants ? (vous)","vos",["votre","leurs","nos"],"Plural con «vous»: vos.","S"],
+["Les enfants font ___ devoirs. (ils)","leurs",["leur","ses","vos"],"Varios objetos con «ils»: leurs.","S"],
+["Les Dupont adorent ___ chien. (ils)","leur",["leurs","son","ses"],"Un solo objeto con «ils»: leur (sin s).","S"],
+["Paul parle à ___ amie. (il)","son",["sa","ses","leur"],"Ma, ta, sa pasan a mon, ton, son ante vocal o h muda: son amie.","S"],
+["Je vous présente ___ amie Julie. (je)","mon",["ma","mes","ton"],"Ante vocal se usa mon, aunque «amie» sea femenino.","S"],
+["Marie reconnaît ___ erreur. (elle)","son",["sa","ses","leur"],"«Erreur» empieza por vocal: son erreur.","S"],
+["On est fiers de ___ équipe. (on = nous)","notre",["son","leur","ses"],"Cuando «on» equivale a «nous», el posesivo es notre / nos.","S"],
+["Quand on est jeune, on pense à ___ avenir. (on = todo el mundo)","son",["notre","leur","ses"],"Cuando «on» significa «todo el mundo», el posesivo es son / sa / ses.","S"],
+["J'ai mal à ___ tête.","la",["ma","sa","une"],"Con partes del cuerpo se usa el artículo definido si el poseedor es obvio.","S"],
+["Il se lave ___ mains.","les",["ses","ces","des"],"Parte del cuerpo con verbo pronominal: artículo definido.","S"],
+["Ce stylo est à moi : c'est ___.","le mien",["la mienne","les miens","le sien"],"Pronombre masculino singular, poseedor «je»: le mien.","S"],
+["Cette montre est à toi : c'est ___.","la tienne",["le tien","les tiens","la sienne"],"Pronombre femenino singular, poseedor «tu»: la tienne.","S"],
+["Ces livres sont à nous : ce sont ___.","les nôtres",["les leurs","les vôtres","les miens"],"Pronombre plural, poseedor «nous»: les nôtres (con ô).","S"],
+["Mon sac est lourd, ___ est léger. (le sac de Paul)","le sien",["le leur","le mien","la sienne"],"Masculino singular, poseedor «il»: le sien.","S"],
+["Notre voiture est rouge, ___ est bleue. (la voiture de vous)","la vôtre",["la nôtre","la leur","le vôtre"],"Femenino singular, poseedor «vous»: la vôtre.","S"],
+["Les enfants de Marie sont grands, ___ sont petits. (mes enfants)","les miens",["les miennes","le mien","les siens"],"Masculino plural, poseedor «je»: les miens.","S"],
+/* --- Démonstratifs et quel --- */
+["___ stylo est à moi.","Ce",["Cet","Cette","Ces"],"Masculino singular ante consonante: ce.","T"],
+["___ ami s'appelle Marc.","Cet",["Ce","Cette","Ces"],"Masculino singular ante vocal o h muda: cet.","T"],
+["Tu connais ___ femme ?","cette",["ce","cet","ces"],"Femenino singular: cette.","T"],
+["___ livres sont chers.","Ces",["Ce","Cet","Cette"],"Plural (masculino o femenino): ces.","T"],
+["Je prends ___ hôtel.","cet",["ce","cette","ces"],"Ante h muda: cet hôtel.","T"],
+["___ heure est-il ?","Quelle",["Quel","Quels","Quelles"],"«Heure» es femenino singular: quelle.","T"],
+["___ âge as-tu ?","Quel",["Quelle","Quels","Quelles"],"«Âge» es masculino singular: quel.","T"],
+["___ films aimes-tu ?","Quels",["Quel","Quelle","Quelles"],"Masculino plural: quels.","T"],
+["___ chaussures préfères-tu ?","Quelles",["Quels","Quelle","Quel"],"Femenino plural: quelles.","T"],
+/* --- Países y ciudades --- */
+["J'habite ___ Lyon.","à",["en","au","aux"],"Ciudades: à.","L"],
+["Elle va ___ Espagne.","en",["au","aux","à"],"Países femeninos o que empiezan por vocal: en.","L"],
+["Ils voyagent ___ Japon.","au",["en","aux","à"],"Países masculinos: au.","L"],
+["Nous allons ___ Allemagne.","en",["au","à l'","aux"],"«Allemagne» es femenino: en Allemagne.","L"],
+["Il habite ___ États-Unis.","aux",["au","en","à"],"Países en plural: aux.","L"],
+["Elle revient ___ Italie.","d'",["de l'","du","des"],"País femenino o con vocal, para venir de: d'.","L"],
+["Il vient ___ Brésil.","du",["de","des","d'"],"País masculino, para venir de: du.","L"],
+["Ils sont ___ Mexique.","au",["en","aux","à"],"«Mexique» es masculino: au Mexique.","L"],
+/* --- Usos especiales --- */
+["Elle est ___ médecin.","—",["un","le","la"],"Profesión sin adjetivo: sin artículo.","U"],
+["Je parle ___ français.","—",["le","du","un"],"Tras parler + idioma, sin artículo.","U"],
+["J'étudie ___ français.","le",["—","du","un"],"Con étudier o aimer, el idioma lleva artículo: le français.","U"],
+["Je fais ___ piano.","du",["le","un","de la"],"Faire de + instrumento o deporte: du piano, du sport.","U"],
+["Il joue ___ guitare.","de la",["la","du","une"],"Jouer de + instrumento: de la guitare.","U"],
+["Elle joue ___ tennis.","au",["du","le","à la"],"Jouer à + deporte: au tennis.","U"],
+["___ lundi, je vais à la piscine. (cada lunes)","Le",["Un","Du","Au"],"Día de la semana con artículo = hábito: le lundi.","U"],
+["Je travaille ___ lundi. (este lunes)","—",["le","du","au"],"Un día concreto va sin artículo.","U"],
+["Elle a ___ yeux bleus.","les",["des","ses","ces"],"Descripción física con avoir: artículo definido.","U"],
+["Tout ___ monde est là.","le",["un","du","les"],"Tout le monde = todos.","U"],
+["Je marche tous ___ jours.","les",["des","ces","ses"],"Tous les jours = cada día.","U"]
+];
+
+/* ===== UTILIDADES ===== */
+const $=(s,p=document)=>p.querySelector(s);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const lab=o=>o==="—"?"— (sin artículo)":o;
+const fill=(s,a,bold)=>{const x=a==="—"?"":a;return s.replace(/___ ?/,x?(bold?"<b>"+esc(x)+"</b>":x)+(x.endsWith("'")?"":" "):"").replace(/ ([.?!])/,"$1")};
+function speak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="fr-FR";u.rate=.9;speechSynthesis.speak(u)}catch(e){}}
+
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>{const on=x===b;x.setAttribute("aria-selected",on);$("#"+x.getAttribute("aria-controls")).hidden=!on});
+});
+
+/* ===== PRÁCTICA ===== */
+const P=$("#p1");let topic="all",R=[],i=0,score=0,streak=0,best=0,wrong=[],stats={},done=false,opts=[];
+function menu(){
+  P.innerHTML=`<div class="chips">${[["all","Todos"],...Object.entries(TOPICS)].map(([k,v])=>`<button class="chip" data-k="${k}" aria-pressed="${k===topic}">${v}</button>`).join("")}</div>
+  <div class="q"><p class="t">Elige el artículo correcto.</p><p class="hint">Cada ronda tiene ${topic==="all"?12:ITEMS.filter(x=>x[4]===topic).length} frases. Tras cada respuesta verás la regla. También puedes responder con las teclas 1 a 4.</p>
+  <div class="row" style="margin-top:6px"><button class="btn" id="go">Empezar</button></div></div>`;
+  P.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{topic=b.dataset.k;menu()});
+  $("#go").onclick=()=>start(topic==="all"?shuffle(ITEMS).slice(0,12):shuffle(ITEMS.filter(x=>x[4]===topic)));
+}
+function start(list){R=list;i=0;score=0;streak=0;best=0;wrong=[];stats={};draw()}
+function draw(){
+  done=false;const q=R[i];opts=shuffle([q[1],...q[2]]);
+  P.innerHTML=`<div class="bar"><i style="width:${i/R.length*100}%"></i></div>
+  <div class="meta"><span>Frase ${i+1} de ${R.length}</span><span>Aciertos: ${score} · Racha: ${streak}</span></div>
+  <div class="q"><p class="t">${esc(q[0])}</p><p class="hint">${TOPICS[q[4]]}</p>
+  <div class="opts">${opts.map((o,k)=>`<button class="opt" data-k="${k}"><small>${k+1}</small>${esc(lab(o))}</button>`).join("")}</div><div id="fb"></div></div>`;
+  P.querySelectorAll(".opt").forEach(b=>b.onclick=()=>pick(+b.dataset.k));
+}
+function pick(k){
+  if(done)return;done=true;const q=R[i],ok=opts[k]===q[1];
+  stats[q[4]]=stats[q[4]]||[0,0];stats[q[4]][1]++;
+  if(ok){score++;streak++;best=Math.max(best,streak);stats[q[4]][0]++}else{streak=0;wrong.push({q,mine:opts[k]})}
+  P.querySelectorAll(".opt").forEach((b,n)=>{b.disabled=true;if(opts[n]===q[1])b.classList.add("ok");else if(n===k)b.classList.add("ko")});
+  $(".t").innerHTML=fill(q[0],q[1],true);
+  const last=i===R.length-1;
+  $("#fb").innerHTML=`<div class="fb"><b>${ok?"¡Correcto!":"Casi."}</b> ${esc(q[3])}</div>
+  <div class="row"><button class="btn" id="nx">${last?"Ver resultado":"Siguiente"}</button><button class="btn ghost" id="sp">🔊 Escuchar frase</button></div>`;
+  $("#sp").onclick=()=>speak(fill(q[0],q[1]).replace(/\s*\(.*?\)/g,""));
+  $("#nx").onclick=()=>{last?result():(i++,draw())};$("#nx").focus();
+}
+document.addEventListener("keydown",e=>{
+  if(!$("#p1").hidden&&/^[1-4]$/.test(e.key)&&!done&&$(".opt"))pick(+e.key-1);
+});
+function result(){
+  const p=Math.round(score/R.length*100);
+  const msg=p>=85?"Excelente: dominas los artículos.":p>=65?"Muy bien: repasa los temas con errores.":"Buen comienzo: revisa la pestaña Resumen y repite.";
+  P.innerHTML=`<div class="bar"><i style="width:100%"></i></div>
+  <div class="q"><div class="score">${score}/${R.length}</div><p><b>${p}%</b> · ${msg} Mejor racha: ${best}.</p>
+  <h2 style="margin-top:14px">Por tema</h2>${Object.entries(stats).map(([k,v])=>`<div>${TOPICS[k]}: <b>${v[0]}/${v[1]}</b></div>`).join("")}
+  ${wrong.length?`<h2>Para repasar</h2>`+wrong.map(w=>`<div class="rev"><div class="fr">${fill(w.q[0],w.q[1],true)}</div><div style="color:var(--ko)">Tu respuesta: ${esc(lab(w.mine))}</div><div style="color:var(--mute)">${esc(w.q[3])}</div></div>`).join(""):"<p>¡Sin errores!</p>"}
+  <div class="row"><button class="btn" id="again">Otra ronda</button>${wrong.length?`<button class="btn ghost" id="fix">Practicar mis errores</button>`:""}<button class="btn ghost" id="mn">Cambiar tema</button></div></div>`;
+  $("#again").onclick=()=>start(topic==="all"?shuffle(ITEMS).slice(0,12):shuffle(ITEMS.filter(x=>x[4]===topic)));
+  if($("#fix"))$("#fix").onclick=()=>start(shuffle(wrong.map(w=>w.q)));
+  $("#mn").onclick=menu;
+}
+menu();
+</script>
+</body>
+</html>
