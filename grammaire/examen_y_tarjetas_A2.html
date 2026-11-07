@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Examen A2 y tarjetas de estudio — French Interactive Lab</title>
+<style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mute:#64748b;--line:#e2e8f0;--blue:#2563eb;--blue-d:#1e40af;--ok:#15803d;--okbg:#dcfce7;--ko:#b91c1c;--kobg:#fee2e2;--r:12px}
+@media(prefers-color-scheme:dark){:root{--bg:#0f172a;--card:#1e293b;--ink:#f1f5f9;--mute:#94a3b8;--line:#334155;--blue:#60a5fa;--blue-d:#93c5fd;--ok:#4ade80;--okbg:#14532d;--ko:#fca5a5;--kobg:#7f1d1d}}
+*{box-sizing:border-box}
+body{margin:0;padding:24px 16px 48px;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;display:flex;justify-content:center}
+main{width:100%;max-width:680px}
+h1{font:700 1.7rem/1.2 Georgia,serif;margin:0 0 4px}
+.sub{color:var(--mute);margin:0 0 20px}
+.tabs{display:flex;gap:6px;border-bottom:2px solid var(--line);margin-bottom:22px}
+.tab{background:none;border:0;padding:10px 16px;font:600 1rem inherit;font-family:inherit;color:var(--mute);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
+.tab[aria-selected=true]{color:var(--blue);border-color:var(--blue)}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.btn{background:var(--blue);color:#fff;border:0;border-radius:8px;padding:10px 18px;font-size:1rem;font-weight:600;cursor:pointer}
+.btn.ghost{background:none;color:var(--blue);border:1.5px solid var(--blue)}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.bar i{display:block;height:100%;background:var(--blue);transition:width .3s}
+.meta{color:var(--mute);font-size:.9rem;display:flex;justify-content:space-between}
+.q{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-top:12px}
+.q .t{font:1.35rem/1.4 Georgia,serif;margin:0 0 4px}
+.q .hint{color:var(--mute);font-size:.9rem;margin:0 0 16px}
+.opt{display:block;width:100%;text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:12px 14px;margin-top:8px;font-size:1.05rem;color:var(--ink);cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--blue)}
+.opt.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok);font-weight:600}
+.opt.ko{background:var(--kobg);border-color:var(--ko);color:var(--ko)}
+.fb{margin-top:14px;padding:12px 14px;border-radius:8px;background:var(--bg);border-left:4px solid var(--blue)}
+.score{font:700 3rem/1 Georgia,serif;color:var(--blue)}
+.rev{border-top:1px solid var(--line);padding:12px 0}
+.rev b{font-family:Georgia,serif}
+.scene{perspective:1000px;margin-top:14px}
+.card{position:relative;height:230px;cursor:pointer;transition:transform .5s;transform-style:preserve-3d;width:100%;border:0;background:none;padding:0}
+.card.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;background:var(--card);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+.face.back{transform:rotateY(180deg);border-color:var(--blue);border-width:2px}
+.face .w{font:2rem/1.25 Georgia,serif;color:var(--ink)}
+.face .c{position:absolute;top:12px;left:16px;font-size:.85rem;color:var(--mute)}
+.face .l{position:absolute;bottom:12px;font-size:.85rem;color:var(--mute)}
+.spk{position:absolute;top:8px;right:10px;background:none;border:0;font-size:1.3rem;cursor:pointer;padding:6px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.chip{border:1.5px solid var(--line);background:none;color:var(--ink);border-radius:20px;padding:4px 12px;font-size:.9rem;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.know{background:var(--okbg);color:var(--ok);border:0}
+.rep{background:var(--kobg);color:var(--ko);border:0}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){.card,.bar i{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<h1>Français A2 · Laboratorio</h1>
+<p class="sub">Examen de nivel y tarjetas de estudio francés ⇄ inglés.</p>
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" id="t1" aria-selected="true" aria-controls="p1">Examen A2</button>
+  <button class="tab" role="tab" id="t2" aria-selected="false" aria-controls="p2">Tarjetas</button>
+</div>
+
+<section id="p1" role="tabpanel" aria-labelledby="t1"></section>
+<section id="p2" role="tabpanel" aria-labelledby="t2" hidden></section>
+</main>
+
+<script>
+/* ============ CONTENIDO (editable) ============ */
+// Examen: [pregunta, [opciones], índice correcto, explicación, tema]
+const EXAM=[
+["Je mange ___ pain.",["du","de la","des","un"],0,"«Pain» es masculino singular: artículo partitivo «du».","Partitif"],
+["Elle boit ___ eau.",["du","de l'","de la","des"],1,"Antes de vocal o «h» muda, el partitivo es «de l'».","Partitif"],
+["Il y a beaucoup ___ pommes dans le panier.",["des","de","du","d'un"],1,"Tras una expresión de cantidad se usa «de» (beaucoup de).","Partitif"],
+["Hier, nous ___ au cinéma.",["sommes allés","avons allé","allons","allions"],0,"«Aller» forma el passé composé con «être»; el participio concuerda.","Passé composé"],
+["Elle est ___ hier matin.",["parti","partie","partis","partit"],1,"Con «être» el participio concuerda: sujeto femenino → «partie».","Passé composé"],
+["Ce matin, elle ___ levée à sept heures.",["a","est","s'est","se"],2,"Los verbos pronominales usan «être» en passé composé: «s'est levée».","Pronominaux"],
+["Demain, je ___ voir mes amis.",["vais","suis","fais","ai"],0,"Futuro próximo = aller (presente) + infinitivo.","Futur proche"],
+["Quand j'étais petit, je ___ au parc.",["jouais","ai joué","joue","jouerai"],0,"Hábito en el pasado → imparfait.","Imparfait"],
+["Je ___ comprends pas.",["ne","n'","non","pas"],0,"La negación lleva dos partes: ne … pas.","Négation"],
+["J'ai perdu ___ clés.",["mon","ma","mes","ses"],2,"«Clés» es plural → posesivo «mes».","Possessifs"],
+["Ce film est ___ que l'autre.",["plus bon","meilleur","plus meilleur","aussi meilleur"],1,"El comparativo de «bon» es «meilleur» (nunca «plus bon»).","Comparatif"],
+["Tu aimes ce pull ? Oui, je ___ aime.",["le","l'","lui","y"],1,"Pronombre COD (le/la) + vocal → «l'».","Pronoms"],
+["Tu vas à Paris ? Oui, j'___ vais demain.",["en","y","le","lui"],1,"«Y» sustituye a un lugar introducido por «à».","Pronoms"],
+["Je vais ___ France cet été.",["à","au","en","dans"],2,"Países femeninos (la France) → «en».","Prépositions"],
+["Ils ___ le bus tous les jours.",["prend","prends","prennent","prenent"],2,"Prendre: ils/elles prennent.","Verbes"],
+["Vous ___ quoi ce soir ?",["faisez","faites","faîtes","faisent"],1,"Faire: vous faites (forma irregular).","Verbes"],
+["Il ___ vingt-cinq ans.",["est","a","fait","as"],1,"La edad se expresa con «avoir», no con «être».","Verbes"],
+["___ la porte, s'il te plaît !",["Fermes","Fermer","Ferme","Fermé"],2,"Imperativo de verbos en -er: sin «s» en «tu» → «Ferme».","Impératif"]
+];
+// Tarjetas: [francés, inglés, categoría]
+const CARDS=[
+["Bonjour","Hello / Good morning","Salutations"],["Enchanté(e)","Nice to meet you","Salutations"],
+["Excusez-moi","Excuse me","Salutations"],["Je voudrais…","I would like…","Salutations"],
+["Combien ça coûte ?","How much does it cost?","Salutations"],["Où est la gare ?","Where is the station?","Salutations"],
+["Je ne comprends pas","I don't understand","Salutations"],["Pouvez-vous répéter ?","Can you repeat?","Salutations"],
+["aller","to go","Verbes"],["faire","to do / to make","Verbes"],["prendre","to take","Verbes"],
+["vouloir","to want","Verbes"],["pouvoir","can / to be able to","Verbes"],["savoir","to know (a fact)","Verbes"],
+["venir","to come","Verbes"],["devoir","must / to have to","Verbes"],["se lever","to get up","Verbes"],["s'appeler","to be called","Verbes"],
+["le pain","bread","Nourriture"],["le fromage","cheese","Nourriture"],["l'eau","water","Nourriture"],
+["la pomme","apple","Nourriture"],["le lait","milk","Nourriture"],["la viande","meat","Nourriture"],
+["hier","yesterday","Temps"],["demain","tomorrow","Temps"],["aujourd'hui","today","Temps"],
+["la semaine prochaine","next week","Temps"],["souvent","often","Temps"],["toujours","always","Temps"],
+["la boulangerie","bakery","Lieux"],["la gare","train station","Lieux"],["le bureau","office / desk","Lieux"],["la maison","house / home","Lieux"],
+["beaucoup","a lot","Mots utiles"],["un peu","a little","Mots utiles"],["déjà","already","Mots utiles"],
+["encore","again / still","Mots utiles"],["parce que","because","Mots utiles"],["mais","but","Mots utiles"],
+/* --- Les possessifs --- */
+["mon frère","my brother (masc. noun)","Possessifs"],["ma sœur","my sister (fem. noun)","Possessifs"],["mes amis","my friends (plural)","Possessifs"],
+["ton livre","your book (tu, masc.)","Possessifs"],["ta voiture","your car (tu, fem.)","Possessifs"],["tes clés","your keys (tu, plural)","Possessifs"],
+["son chien","his / her dog (masc.)","Possessifs"],["sa maison","his / her house (fem.)","Possessifs"],["ses lunettes","his / her glasses (plural)","Possessifs"],
+["notre école","our school (singular)","Possessifs"],["nos voisins","our neighbours (plural)","Possessifs"],
+["votre sac","your bag (vous, singular)","Possessifs"],["vos amis","your friends (vous, plural)","Possessifs"],
+["leur fils","their son (singular)","Possessifs"],["leurs enfants","their children (plural)","Possessifs"],
+["le mien / la mienne","mine (masc. / fem.)","Possessifs"],["les miens / les miennes","mine (plural)","Possessifs"],
+["le tien / la tienne","yours (tu)","Possessifs"],["le sien / la sienne","his / hers","Possessifs"],
+["le nôtre / la nôtre","ours","Possessifs"],["le vôtre / la vôtre","yours (vous)","Possessifs"],["le leur / la leur","theirs","Possessifs"],
+["Le possessif s'accorde avec…","the noun owned (gender and number); it changes with the owner (je → mon, tu → ton)","Possessifs"],
+["mon amie (pas « ma amie »)","ma / ta / sa become mon / ton / son before a vowel or a mute h","Possessifs"],
+["J'ai mal à la tête","My head hurts: body parts take the article, not the possessive, when the owner is obvious","Possessifs"],
+["mon ami → [mɔ̃n ami]","Liaison with a vowel is required, except before an aspirated h (mes | héros)","Possessifs"],
+["notre / le nôtre","notre = adjective (with a noun); le nôtre = pronoun (replaces a noun, with ô)","Possessifs"],
+["On est fiers de notre équipe","'On' meaning 'nous' takes notre / nos; 'on' meaning 'everyone' takes son / sa / ses","Possessifs"]
+];
+
+/* ============ UTILIDADES ============ */
+const $=(s,p=document)=>p.querySelector(s);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const sz=t=>t.length>60?"1.05rem":t.length>34?"1.3rem":t.length>22?"1.6rem":"";
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function speak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="fr-FR";u.rate=.9;speechSynthesis.speak(u)}catch(e){}}
+
+/* ============ PESTAÑAS ============ */
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>{const on=x===b;x.setAttribute("aria-selected",on);$("#"+x.getAttribute("aria-controls")).hidden=!on});
+});
+
+/* ============ EXAMEN ============ */
+const ex=$("#p1");let Q=[],i=0,score=0,wrong=[],done=false;
+function startExam(){Q=shuffle(EXAM);i=0;score=0;wrong=[];renderQ()}
+function renderQ(){
+  done=false;const q=Q[i];
+  ex.innerHTML=`<div class="bar"><i style="width:${i/Q.length*100}%"></i></div>
+  <div class="meta"><span>Pregunta ${i+1} de ${Q.length}</span><span>Aciertos: ${score}</span></div>
+  <div class="q"><p class="t">${esc(q[0])}</p><p class="hint">${esc(q[4])} · elige la opción correcta</p>
+  <div id="opts">${q[1].map((o,k)=>`<button class="opt" data-k="${k}">${esc(o)}</button>`).join("")}</div>
+  <div id="fb"></div></div>`;
+  ex.querySelectorAll(".opt").forEach(b=>b.onclick=()=>answer(+b.dataset.k));
+}
+function answer(k){
+  if(done)return;done=true;const q=Q[i],good=k===q[2];
+  if(good)score++;else wrong.push({q:q[0].replace("___",`<b>${esc(q[1][q[2]])}</b>`),mine:q[1][k],why:q[3]});
+  ex.querySelectorAll(".opt").forEach((b,n)=>{b.disabled=true;if(n===q[2])b.classList.add("ok");else if(n===k)b.classList.add("ko")});
+  const last=i===Q.length-1;
+  $("#fb").innerHTML=`<div class="fb"><b>${good?"¡Correcto!":"Casi."}</b> ${esc(q[3])}</div>
+  <div class="row"><button class="btn" id="nx">${last?"Ver resultado":"Siguiente"}</button><button class="btn ghost" id="sp">🔊 Escuchar frase</button></div>`;
+  $("#sp").onclick=()=>speak(q[0].replace("___",q[1][q[2]]));
+  $("#nx").onclick=()=>{last?result():(i++,renderQ())};$("#nx").focus();
+}
+function result(){
+  const p=Math.round(score/Q.length*100);
+  const msg=p>=85?"Excelente: dominas el nivel A2.":p>=65?"Buen trabajo: estás cerca de consolidar el A2.":"Buen comienzo: repasa los temas marcados y vuelve a intentarlo.";
+  ex.innerHTML=`<div class="bar"><i style="width:100%"></i></div>
+  <div class="q"><div class="score">${score}/${Q.length}</div><p><b>${p}%</b> · ${msg}</p>
+  ${wrong.length?`<h3 style="margin:18px 0 0;font-family:Georgia,serif">Para repasar</h3>`+wrong.map(w=>`<div class="rev"><div>${w.q}</div><div style="color:var(--ko)">Tu respuesta: ${esc(w.mine)}</div><div style="color:var(--mute)">${esc(w.why)}</div></div>`).join(""):"<p>¡Sin errores!</p>"}
+  <div class="row"><button class="btn" id="again">Repetir examen</button></div></div>`;
+  $("#again").onclick=startExam;
+}
+startExam();
+
+/* ============ TARJETAS ============ */
+const fc=$("#p2");let cat="Todas",dir="fr",deck=[],ci=0,known=new Set(),flipped=false;
+const cats=["Todas",...new Set(CARDS.map(c=>c[2]))];
+function buildDeck(onlyRepeat){
+  let d=CARDS.filter(c=>cat==="Todas"||c[2]===cat);
+  if(onlyRepeat)d=d.filter(c=>!known.has(c[0]));
+  deck=shuffle(d);ci=0;flipped=false;drawCards();
+}
+function drawCards(){
+  const dirBtn=`<button class="chip" id="dir" aria-pressed="false">Dirección: ${dir==="fr"?"Français → English":"English → Français"} (cambiar)</button>`;
+  const head=`<div class="chips">${cats.map(c=>`<button class="chip" data-c="${esc(c)}" aria-pressed="${c===cat}">${esc(c)}</button>`).join("")}</div><div class="chips">${dirBtn}</div>`;
+  if(!deck.length){fc.innerHTML=head+`<div class="q"><p class="t">¡Mazo completado!</p><p>Marcaste todas como «Ya la sé». Elige otra categoría o reinicia.</p><div class="row"><button class="btn" id="reset">Reiniciar mazo</button></div></div>`;
+    $("#reset").onclick=()=>{known.clear();buildDeck()};bind();return}
+  const c=deck[ci],front=dir==="fr"?c[0]:c[1],back=dir==="fr"?c[1]:c[0],frText=c[0];
+  fc.innerHTML=head+`<div class="bar"><i style="width:${ci/deck.length*100}%"></i></div>
+  <div class="meta"><span>Tarjeta ${ci+1} de ${deck.length}</span><span>Aprendidas: ${known.size}/${CARDS.length}</span></div>
+  <div class="scene"><button class="card ${flipped?"flip":""}" id="card" aria-label="Voltear tarjeta">
+    <div class="face"><span class="c">${esc(c[2])}</span><span class="w" style="font-size:${sz(front)}">${esc(front)}</span><span class="l">${dir==="fr"?"Français":"English"} · toca para voltear</span></div>
+    <div class="face back"><span class="c">${esc(c[2])}</span><span class="w" style="font-size:${sz(back)}">${esc(back)}</span><span class="l">${dir==="fr"?"English":"Français"}</span></div>
+  </button></div>
+  <div class="row"><button class="btn ghost" id="spk">🔊 Escuchar en francés</button>
+  <button class="btn rep" id="rep">Repasar</button><button class="btn know" id="kn">Ya la sé</button></div>
+  <div class="row"><button class="btn ghost" id="shf">Mezclar</button><button class="btn ghost" id="onlyrep">Solo las pendientes</button></div>`;
+  $("#card").onclick=()=>{flipped=!flipped;$("#card").classList.toggle("flip",flipped)};
+  $("#spk").onclick=()=>speak(frText);
+  $("#kn").onclick=()=>{known.add(c[0]);next(true)};
+  $("#rep").onclick=()=>{known.delete(c[0]);next(false)};
+  $("#shf").onclick=()=>buildDeck();
+  $("#onlyrep").onclick=()=>buildDeck(true);
+  bind();
+}
+function next(removeKnown){
+  flipped=false;
+  if(removeKnown){deck.splice(ci,1);if(ci>=deck.length)ci=0}else{ci=(ci+1)%deck.length}
+  drawCards();
+}
+function bind(){
+  fc.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{cat=b.dataset.c;buildDeck()});
+  const d=$("#dir",fc);if(d)d.onclick=()=>{dir=dir==="fr"?"en":"fr";flipped=false;drawCards()};
+}
+fc.addEventListener("keydown",e=>{if(e.code==="Space"&&e.target.tagName!=="BUTTON"){e.preventDefault();$("#card")?.click()}});
+buildDeck();
+</script>
+</body>
+</html>
